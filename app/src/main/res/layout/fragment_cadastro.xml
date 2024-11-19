@@ -4,9 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.LoginFragment"
+    tools:context=".fragments.CadastroFragment"
     android:background="#C3D5B4">
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,20 +30,32 @@
             app:layout_constraintTop_toTopOf="@+id/guideline" />
 
         <TextView
-            android:id="@+id/title_login"
+            android:id="@+id/title_criar_conta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Login"
+            android:text="Criar Nova Conta"
             android:textColor="@color/black"
-            android:textSize="36dp"
+            android:textSize="26dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/logo_ifam"
             app:layout_constraintStart_toStartOf="@+id/logo_ifam"
             app:layout_constraintTop_toBottomOf="@+id/logo_ifam" />
 
+        <TextView
+            android:id="@+id/ir_para_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/underlined_text_ir_para_login"
+            style="@style/CustomLinkTextStyle"
+            android:textSize="12dp"
+            app:layout_constraintTop_toBottomOf="@id/title_criar_conta"
+            app:layout_constraintStart_toStartOf="@id/title_criar_conta"
+            app:layout_constraintEnd_toEndOf="@id/title_criar_conta"
+            />
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_layout_email_login"
+            android:id="@+id/input_layout_nome_cadastro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
@@ -52,12 +63,34 @@
             android:layout_marginStart="56dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_login"
+            app:layout_constraintTop_toBottomOf="@id/title_criar_conta"
             style="@style/CustomTextInputStyle">
 
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_email_login"
+                android:id="@+id/input_nome_cadastro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_email_cadastro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="56dp"
+            android:layout_marginStart="56dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_nome_cadastro"
+            style="@style/CustomTextInputStyle">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_email_cadastro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail"
@@ -67,21 +100,21 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_layout_senha_login"
+            android:id="@+id/input_layout_senha_cadastro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="56dp"
             android:layout_marginStart="56dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_layout_email_login"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_email_cadastro"
             style="@style/CustomTextInputStyle"
             >
 
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_senha_login"
+                android:id="@+id/input_senha_cadastro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Senha"
@@ -89,39 +122,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <TextView
-            android:id="@+id/esqueci_minha_senha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/underlined_text_esqueci_minha_senha"
-            style="@style/CustomLinkTextStyle"
-            app:layout_constraintTop_toBottomOf="@id/input_layout_senha_login"
-            app:layout_constraintStart_toStartOf="@id/input_layout_senha_login"
-            />
-
         <Button
-            android:id="@+id/login"
+            android:id="@+id/cadastrar"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Entrar"
+            android:text="Cadastrar"
             style="@style/CustomButtonStyle"
             android:layout_marginTop="36dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/esqueci_minha_senha"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_senha_cadastro"
             />
-
-        <TextView
-            android:id="@+id/catastre_se"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/underlined_text_cadasto"
-            style="@style/CustomLinkTextStyle"
-            app:layout_constraintTop_toBottomOf="@id/login"
-            app:layout_constraintStart_toStartOf="@id/login"
-            app:layout_constraintEnd_toEndOf="@id/login"
-            />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

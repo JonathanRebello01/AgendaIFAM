@@ -2,4 +2,11 @@
     <string name="app_name">Agenda IFAM</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    Tela de login-->
+    <string name="underlined_text_esqueci_minha_senha"><u>Esqueci minha senha</u></string>
+    <string name="underlined_text_cadasto"><u>Ainda não tem conta? Cadastrar-se</u></string>
+
+    <!--    Tela de cadastro-->
+    <string name="underlined_text_ir_para_login"><u>Já tem uma conta? Faça login</u></string>
 </resources>
