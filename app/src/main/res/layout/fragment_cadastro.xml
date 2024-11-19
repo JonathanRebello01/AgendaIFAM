@@ -33,7 +33,7 @@
             android:id="@+id/title_criar_conta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="18dp"
             android:text="Criar Nova Conta"
             android:textColor="@color/black"
             android:textSize="26dp"
@@ -42,6 +42,16 @@
             app:layout_constraintStart_toStartOf="@+id/logo_ifam"
             app:layout_constraintTop_toBottomOf="@+id/logo_ifam" />
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/tipoConta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Conta de coordenador: "
+            app:layout_constraintTop_toBottomOf="@id/title_criar_conta"
+            app:layout_constraintStart_toStartOf="@id/title_criar_conta"
+            app:layout_constraintEnd_toEndOf="@id/title_criar_conta"
+            />
+
         <TextView
             android:id="@+id/ir_para_login"
             android:layout_width="wrap_content"
@@ -49,7 +59,7 @@
             android:text="@string/underlined_text_ir_para_login"
             style="@style/CustomLinkTextStyle"
             android:textSize="12dp"
-            app:layout_constraintTop_toBottomOf="@id/title_criar_conta"
+            app:layout_constraintTop_toBottomOf="@id/tipoConta"
             app:layout_constraintStart_toStartOf="@id/title_criar_conta"
             app:layout_constraintEnd_toEndOf="@id/title_criar_conta"
             />
@@ -58,12 +68,12 @@
             android:id="@+id/input_layout_nome_cadastro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="56dp"
             android:layout_marginStart="56dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_criar_conta"
+            app:layout_constraintTop_toBottomOf="@id/ir_para_login"
             style="@style/CustomTextInputStyle">
 
 
@@ -121,6 +131,29 @@
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="56dp"
+            android:layout_marginStart="56dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_senha_cadastro"
+            style="@style/CustomTextInputStyle"
+            android:visibility="gone"
+            >
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_area_cadastro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Área"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/cadastrar"
@@ -128,11 +161,13 @@
             android:layout_height="wrap_content"
             android:text="Cadastrar"
             style="@style/CustomButtonStyle"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_layout_senha_cadastro"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_area"
+
             />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
