@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "713259161276",
+    "project_id": "agendaifam",
+    "storage_bucket": "agendaifam.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713259161276:android:4811ae20661dd7289f62b9",
+        "android_client_info": {
+          "package_name": "com.example.agendaifam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHQBy43NIdRIDSBThBt8E8bF_fKm9RaiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
