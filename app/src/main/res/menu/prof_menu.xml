@@ -6,7 +6,8 @@
     <item
         android:id="@+id/menu_home"
         android:icon="@drawable/ic_menu_home"
-        android:title="Menu" />
+        android:title="Menu"
+        android:enabled="true" />
     <item
         android:id="@+id/menu_calendar"
         android:icon="@drawable/ic_menu_calendar"
