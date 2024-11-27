@@ -10,6 +10,6 @@
     <!--    Tela de cadastro-->
     <string name="underlined_text_ir_para_login"><u>Já tem uma conta? Faça login</u></string>
 
-    <!--    Tela de redefionir senha-->
+    <!--    Tela de redefinir senha-->
     <string name="underlined_text_retornar_para_login"><u>Retornar para o Login</u></string>
 </resources>
