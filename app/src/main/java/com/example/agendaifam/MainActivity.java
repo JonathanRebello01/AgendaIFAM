@@ -11,6 +11,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.Firebase;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -32,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
-
 
     }
 }

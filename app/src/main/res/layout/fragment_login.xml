@@ -45,7 +45,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_login"
-            style="@style/CustomTextInputStyle">
+            style="@style/CustomTextInputStyle"
+            android:textColorHint="@color/black">
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -53,7 +54,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail"
-
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,6 +69,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input_layout_email_login"
             style="@style/CustomTextInputStyle"
+            android:textColorHint="@color/black"
             >
 
 

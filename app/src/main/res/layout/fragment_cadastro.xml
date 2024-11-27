@@ -66,7 +66,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ir_para_login"
-            style="@style/CustomTextInputStyle">
+            style="@style/CustomTextInputStyle"
+            android:textColorHint="@color/black">
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -88,7 +89,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input_layout_nome_cadastro"
-            style="@style/CustomTextInputStyle">
+            style="@style/CustomTextInputStyle"
+            android:textColorHint="@color/black">
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -96,7 +98,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail"
-
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,6 +113,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input_layout_email_cadastro"
             style="@style/CustomTextInputStyle"
+            android:textColorHint="@color/black"
             >
 
 
@@ -134,6 +136,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input_layout_senha_cadastro"
             style="@style/CustomTextInputStyle"
+            android:textColorHint="@color/black"
             android:visibility="gone"
             >
 
