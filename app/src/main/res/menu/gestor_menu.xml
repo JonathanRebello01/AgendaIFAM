@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_bookings"
+        android:id="@+id/menu_edit"
         android:icon="@drawable/ic_menu_edit"
         android:title="Editar" />
     <item
@@ -10,7 +10,7 @@
         android:title="Menu"
         android:enabled="true" />
     <item
-        android:id="@+id/menu_calendar"
+        android:id="@+id/menu_solicitation"
         android:icon="@drawable/ic_menu_books"
         android:title="Solicitações" />
 </menu>
