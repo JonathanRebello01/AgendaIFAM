@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+    implementation platform("com.google.firebase:firebase-bom:32.2.0")
     implementation libs.firebase.firestore
     implementation libs.appcompat
     implementation libs.material
