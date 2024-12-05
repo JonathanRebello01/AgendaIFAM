@@ -21,6 +21,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -117,7 +120,6 @@ public class CadastroFragment extends Fragment {
         String email = edit_email.getText().toString().trim();
         String senha = edit_senha.getText().toString().trim();
 
-
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -125,11 +127,24 @@ public class CadastroFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Toast.makeText(requireContext(), mensagens[1], Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(requireContext(), "Erro: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            String erro;
+                            try {
+                                throw task.getException();
+                            } catch (FirebaseAuthWeakPasswordException e) {
+                                erro = "Digite uma senha com no mínimo 6 caracteres";
+                            } catch (FirebaseAuthUserCollisionException e) {
+                                erro = "Essa conta já foi cadastrada";
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
+                                erro = "E-mail inválido";
+                            } catch (Exception e) {
+                                erro = "Erro ao cadastrar usuário: " + e.getMessage();
+                            }
+                            Toast.makeText(requireContext(), erro, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
     }
+
 
     private void iniciarcomponentes(View view){
         login = getView().findViewById(R.id.ir_para_login);
