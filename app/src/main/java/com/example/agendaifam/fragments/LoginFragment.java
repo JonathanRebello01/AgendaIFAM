@@ -99,6 +99,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void checkDados(String email, String senha) {
+
     }
 
     private void iniciarComponentes(View view){
