@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 
 import com.example.agendaifam.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
@@ -24,6 +27,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +55,7 @@ public class CadastroFragment extends Fragment {
     private FirebaseAuth auth;
 
     String[] mensagens = {"Preencha todos os campo", "Cadastro realizado com sucesso!"};
+    String  usuarioID;
 
     public CadastroFragment() {
         // Required empty public constructor
@@ -125,6 +134,8 @@ public class CadastroFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            SalvaDadosUsuario();
+
                             Toast.makeText(requireContext(), mensagens[1], Toast.LENGTH_LONG).show();
                         } else {
                             String erro;
@@ -141,6 +152,32 @@ public class CadastroFragment extends Fragment {
                             }
                             Toast.makeText(requireContext(), erro, Toast.LENGTH_LONG).show();
                         }
+                    }
+                });
+    }
+
+    private  void SalvaDadosUsuario(){
+        String nome = edit_nome.getText().toString();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String,Object> usuarios = new HashMap<>();
+        usuarios.put("nome",nome);
+
+        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
+        documentReference.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d("db", "Sucesso ao salvar os dados");
+
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("db_error", "Erro ai salvar os dados" + e.toString());
+
                     }
                 });
     }
