@@ -4,15 +4,25 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.agendaifam.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +40,9 @@ public class CadastroFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private TextView login;
+    private EditText nome, email, senha;
+    private SwitchCompat coordenador;
+    private boolean iscoordenador;
     private Button cadastrar;
 
     public CadastroFragment() {
@@ -61,29 +74,68 @@ public class CadastroFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+                iniciarcomponentes();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cadastro, container, false);
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        iniciarcomponentes(view);
-        login.setOnClickListener(new View.OnClickListener() {
+//        login.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main, new LoginFragment()).commit();
+//            }
+//        });
+
+//        cadastrar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                String txt_nome = nome.getText().toString();
+//                String txt_email = email.getText().toString();
+//                String txt_senha = senha.getText().toString();
+//                boolean iscoordenador = coordenador.isChecked();
+//
+//                if (txt_nome.isEmpty() || txt_email.isEmpty() || txt_senha.isEmpty()){
+//                    Toast.makeText(getContext(), "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+//                }
+//                else{
+////                    cadastrarUsuario(txt_email, txt_senha);
+//                }
+//            }
+//        });
+    }
+
+    private void cadastrarUsuario(String txtEmail, String txtSenha) {
+        String txt_email = email.getText().toString();
+        String txt_senha = senha.getText().toString();
+
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(txt_email, txt_senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main, new LoginFragment()).commit();
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(getContext(), "Cadastro concluído com sucesso", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    private void iniciarcomponentes(View view){
-        login = getView().findViewById(R.id.ir_para_login);
-        cadastrar = getView().findViewById(R.id.cadastrar);
+    private void iniciarcomponentes(){
+//        login = requireView().findViewById(R.id.ir_para_login);
+//        cadastrar = getView().findViewById(R.id.cadastrar);
+//        nome = getView().findViewById(R.id.input_nome_cadastro);
+//        email = getView().findViewById(R.id.input_email_cadastro);
+//        senha = getView().findViewById(R.id.input_senha_cadastro);
+//        coordenador = getView().findViewById(R.id.tipoConta);
+
     }
 }
