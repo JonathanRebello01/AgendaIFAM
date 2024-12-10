@@ -39,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Conta de coordenador: "
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/title_criar_conta"
             app:layout_constraintStart_toStartOf="@id/title_criar_conta"
             app:layout_constraintEnd_toEndOf="@id/title_criar_conta"
@@ -75,6 +76,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nome"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:maxLines="1"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -98,6 +102,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:maxLines="1"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,6 +121,7 @@
             app:layout_constraintTop_toBottomOf="@id/input_layout_email_cadastro"
             style="@style/CustomTextInputStyle"
             android:textColorHint="@color/black"
+            android:imeOptions="actionNext"
             >
 
 
@@ -122,6 +130,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Senha"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:maxLines="1"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -146,6 +157,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Área"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:maxLines="1"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 

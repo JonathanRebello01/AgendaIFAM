@@ -46,7 +46,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_login"
             style="@style/CustomTextInputStyle"
-            android:textColorHint="@color/black">
+            android:textColorHint="@color/black"
+            android:imeOptions="actionDone"
+            >
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -54,6 +56,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail"
+                android:imeOptions="actionDone"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:maxLines="1"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,6 +84,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Senha"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:maxLines="1"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
