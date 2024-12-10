@@ -172,7 +172,8 @@ public class LoginFragment extends Fragment {
                                         }
                                         else if (codigo == 2){
                                             areaGestao = value.getString("2");
-                                        } else if (codigo == 3) {
+                                        }
+                                        else if (codigo == 3) {
                                             areaGestao = value.getString("3");
                                         }
                                         else if (codigo == 4) {
@@ -220,7 +221,6 @@ public class LoginFragment extends Fragment {
                                                         editor.putInt("codigo", codigo);
                                                         editor.putString("areagestao", areaGestao);
                                                         editor.putString("tipoconta", tipoConta);
-
 
                                                         editor.apply();
 

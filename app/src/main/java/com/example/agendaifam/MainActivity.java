@@ -10,11 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,19 +32,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
-
-        initNavigation();
-
     }
-
-    private void initNavigation() {
-        NavHostFragment navHostFragment =
-                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_prof);
-        if (navHostFragment != null) {
-            NavController navController = navHostFragment.getNavController();
-            BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_prof);
-            NavigationUI.setupWithNavController(bottomNavigationView, navController);
-        }
-    }
-
 }

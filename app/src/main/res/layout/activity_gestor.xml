@@ -4,13 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/gestor_tela"
-    app:navGraph="@navigation/nav_gestor"
-    app:defaultNavHost="true"
-    tools:context=".ProfessorActivity">
+    tools:context=".ProfessorActivity"
+    android:id="@+id/activity_gestor">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container_view"
+        android:id="@+id/nav_gestor"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:name="androidx.navigation.fragment.NavHostFragment"
