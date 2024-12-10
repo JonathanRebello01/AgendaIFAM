@@ -7,17 +7,6 @@
     tools:context=".ProfessorActivity"
     android:id="@+id/main">
 
-    <ImageView
-        android:id="@+id/logo_ifam"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ifam_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_prof"
         android:layout_width="match_parent"
@@ -27,7 +16,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bottom_prof"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo_ifam"
+        app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_prof"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

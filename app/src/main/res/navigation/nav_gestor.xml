@@ -11,13 +11,13 @@
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" />
     <fragment
-        android:id="@+id/solicitationFragment"
+        android:id="@+id/menu_solicitation"
         android:name="com.example.agendaifam.fragments.SolicitationFragment"
         android:label="fragment_solicitation"
         tools:layout="@layout/fragment_solicitation" />
     <fragment
-        android:id="@+id/menu_solicitation"
-        android:name="com.example.agendaifam.fragments.EditFragment"
+        android:id="@+id/menu_edit"
+        android:name="com.example.agendaifam.fragments.ControlRoomFragment"
         android:label="fragment_control_room"
         tools:layout="@layout/fragment_control_room"/>
 </navigation>

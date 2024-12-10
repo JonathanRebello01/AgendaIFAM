@@ -26,5 +26,17 @@ public class ProfessorActivity extends AppCompatActivity {
             return insets;
         });
 
+        initNavigation();
+
+    }
+
+    private void initNavigation() {
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_prof);
+        if (navHostFragment != null) {
+            NavController navController = navHostFragment.getNavController();
+            BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_prof);
+            NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        }
     }
 }
