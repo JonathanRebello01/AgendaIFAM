@@ -47,7 +47,7 @@
             app:layout_constraintTop_toBottomOf="@id/title_login"
             style="@style/CustomTextInputStyle"
             android:textColorHint="@color/black"
-            android:imeOptions="actionDone"
+            android:imeOptions="actionNext"
             >
 
 
@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionNext"
                 android:textColor="@color/black"
                 android:inputType="text"
                 android:maxLines="1"
