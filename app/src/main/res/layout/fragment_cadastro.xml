@@ -38,7 +38,7 @@
             android:id="@+id/tipoConta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Conta de coordenador: "
+            android:text="Conta de Gestor: "
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/title_criar_conta"
             app:layout_constraintStart_toStartOf="@id/title_criar_conta"
@@ -148,7 +148,6 @@
             app:layout_constraintTop_toBottomOf="@id/input_layout_senha_cadastro"
             style="@style/CustomTextInputStyle"
             android:textColorHint="@color/black"
-            android:visibility="gone"
             >
 
 
@@ -156,10 +155,11 @@
                 android:id="@+id/input_area_cadastro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Área"
+                android:hint="Código da área de gestão"
                 android:textColor="@color/black"
                 android:inputType="text"
                 android:maxLines="1"
+                android:visibility="gone"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 

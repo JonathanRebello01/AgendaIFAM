@@ -61,6 +61,7 @@
 
         <!-- Horários -->
         <TextView
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Horários:"
@@ -75,6 +76,7 @@
             android:layout_marginBottom="16dp">
 
             <Spinner
+                android:visibility="gone"
                 android:id="@+id/start_time"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -83,6 +85,7 @@
                 android:padding="8dp" />
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="—"
@@ -90,6 +93,7 @@
                 android:layout_marginHorizontal="8dp" />
 
             <Spinner
+                android:visibility="gone"
                 android:id="@+id/end_time"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -106,7 +110,8 @@
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
-        <Spinner
+
+        <EditText
             android:id="@+id/edit_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,10 +1,10 @@
 package com.example.agendaifam.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -17,11 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.agendaifam.R;
+import com.example.agendaifam.models.mProfessor;
+import com.example.agendaifam.models.mUsuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -29,9 +30,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,8 +47,9 @@ public class CadastroFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private TextView login;
-    private EditText edit_nome,edit_email,edit_senha;
+    private EditText edit_nome,edit_email,edit_senha, edt_codigo;
     private Button cadastrar;
+    SwitchCompat tipoConta;
 
     private FirebaseAuth auth;
 
@@ -103,6 +102,17 @@ public class CadastroFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         auth = FirebaseAuth.getInstance();
         iniciarcomponentes(view);
+        tipoConta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(tipoConta.isChecked()){
+                    edt_codigo.setVisibility(View.VISIBLE);
+                }
+                else {
+                    edt_codigo.setVisibility(View.GONE);
+                }
+            }
+        });
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +145,10 @@ public class CadastroFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             SalvaDadosUsuario();
-
+                            edit_nome.setText("");
+                            edit_email.setText("");
+                            edit_senha.setText("");
+                            edt_codigo.setText("");
                             Toast.makeText(requireContext(), mensagens[1], Toast.LENGTH_LONG).show();
                         } else {
                             String erro;
@@ -158,15 +171,21 @@ public class CadastroFragment extends Fragment {
 
     private  void SalvaDadosUsuario(){
         String nome = edit_nome.getText().toString();
+        String email = edit_email.getText().toString();
+        Integer codigo = edt_codigo.getText().length();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        Map<String,Object> usuarios = new HashMap<>();
-        usuarios.put("nome",nome);
+        mUsuario usuario;
+        if (codigo != null){
+            usuario = new mUsuario(nome, email, codigo);
+        }
+        else {
+            usuario = new mUsuario(nome, email, null);
+        }
 
         usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
-        documentReference.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
+        documentReference.set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Log.d("db", "Sucesso ao salvar os dados");
@@ -189,6 +208,8 @@ public class CadastroFragment extends Fragment {
         edit_nome = getView().findViewById(R.id.input_nome_cadastro);
         edit_email = getView().findViewById(R.id.input_email_cadastro);
         edit_senha = getView().findViewById(R.id.input_senha_cadastro);
+        tipoConta = getView().findViewById(R.id.tipoConta);
+        edt_codigo = getView().findViewById(R.id.input_area_cadastro);
     }
 }
 
