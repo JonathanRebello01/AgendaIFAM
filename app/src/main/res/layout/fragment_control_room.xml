@@ -43,9 +43,6 @@
         android:layout_marginBottom="16dp">
 
         <!--imagem a esquerda do auditorio-->
-
-        <!--texto sobre o auditório-->
-
         <ImageView
             android:id="@+id/room_image"
             android:layout_width="60dp"
