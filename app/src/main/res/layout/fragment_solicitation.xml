@@ -122,7 +122,7 @@
                 android:text="Solicitante: (David Washinton)"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
-                android:background="@android:color/lighter_gray"
+                android:background="@android:color/white"
                 android:padding="8dp" />
             <TextView
                 android:id="@+id/room_HorarioSolicitado"
@@ -131,7 +131,7 @@
                 android:text="horario solicitado: (9h - 11h)"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
-                android:background="@android:color/lighter_gray"
+                android:background="@android:color/white"
                 android:padding="8dp" />
             <TextView
                 android:id="@+id/room_EventName"
@@ -140,18 +140,8 @@
                 android:text="Nome do Evento: (Reuniao Geral IFAM)"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
-                android:background="@android:color/lighter_gray"
+                android:background="@android:color/white"
                 android:padding="8dp" />
-
-            <!-- Botão de ação
-            <Button
-                android:id="@+id/action_button"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/holo_blue_dark"
-                android:drawableTop="@drawable/edit_icon"
-                android:gravity="center" />-->
 
             <LinearLayout
                 android:id="@+id/button_container"
@@ -170,7 +160,8 @@
                     android:layout_weight="1"
                     android:background="@android:color/holo_blue_dark"
                     android:drawableTop="@drawable/positive_icon"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:contentDescription="Botão de ação positiva"/>
 
                 <Button
                     android:id="@+id/button_two"
@@ -181,7 +172,8 @@
                     android:background="@color/red"
                     android:backgroundTint="@null"
                     android:drawableTop="@drawable/negative_icon"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:contentDescription="Botão de ação negativa"/>
 
 
             </LinearLayout>
