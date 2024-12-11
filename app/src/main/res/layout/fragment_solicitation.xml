@@ -36,16 +36,19 @@
 
     <!-- Box verde dos espaços -->
     <LinearLayout
-        android:id="@+id/room_container"
-        android:layout_width="match_parent"
+        android:layout_width="371dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
-        android:background="@android:color/holo_green_light"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="16dp"
+        android:background="#8AB364"
         android:padding="16dp"
         android:elevation="4dp"
-        android:layout_marginBottom="16dp">
+        android:gravity="center">
 
         <!-- Imagem à esquerda -->
+
+        <!-- Informações da sala -->
         <ImageView
             android:id="@+id/room_image"
             android:layout_width="60dp"
@@ -54,7 +57,6 @@
             android:contentDescription="Imagem da sala"
             android:src="@drawable/auditorio_icon" />
 
-        <!-- Informações da sala -->
         <LinearLayout
             android:id="@+id/room_info"
             android:layout_width="0dp"
@@ -122,8 +124,7 @@
                 android:text="Solicitante: (David Washinton)"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
-                android:background="@android:color/white"
-                android:padding="8dp" />
+                android:padding="2dp" />
             <TextView
                 android:id="@+id/room_HorarioSolicitado"
                 android:layout_width="wrap_content"
@@ -131,8 +132,7 @@
                 android:text="horario solicitado: (9h - 11h)"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
-                android:background="@android:color/white"
-                android:padding="8dp" />
+                android:padding="2dp" />
             <TextView
                 android:id="@+id/room_EventName"
                 android:layout_width="wrap_content"
@@ -140,40 +140,40 @@
                 android:text="Nome do Evento: (Reuniao Geral IFAM)"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
-                android:background="@android:color/white"
-                android:padding="8dp" />
+                android:padding="2dp" />
 
             <LinearLayout
                 android:id="@+id/button_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                android:gravity="center"
                 android:weightSum="2">
 
-                <Button
-                    android:id="@+id/button_one"
-                    android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/holo_blue_dark"
-                    android:drawableTop="@drawable/positive_icon"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:gravity="center"
-                    android:contentDescription="Botão de ação positiva"/>
+                    android:layout_marginTop="16dp">
 
-                <Button
-                    android:id="@+id/button_two"
-                    android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="1"
-                    android:background="@color/red"
-                    android:backgroundTint="@null"
-                    android:drawableTop="@drawable/negative_icon"
-                    android:gravity="center"
-                    android:contentDescription="Botão de ação negativa"/>
+                    <Button
+                        android:id="@+id/button_one"
+                        style="@style/CustomButtonStyle"
+                        android:layout_width="128dp"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@drawable/positive_icon"
+                        android:contentDescription="Botão de positivo"/>
+
+                    <Button
+                        style="@style/CustomButtonStyleRed"
+                        android:layout_width="132dp"
+                        android:layout_height="match_parent"
+                        android:drawableTop="@drawable/negative_icon"
+                        android:contentDescription="Botão de recusar"/>
+                </LinearLayout>
+
 
 
             </LinearLayout>
