@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- CardView Principal -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_solicitacao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="24dp"
+        app:cardBackgroundColor="@color/green_claro"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Conteúdo do Card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_card_local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Imagem à esquerda -->
+            <ImageView
+                android:id="@+id/image_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/green"
+                android:scaleType="centerInside"
+                android:src="@drawable/auditorio_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Título -->
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Auditório"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/image_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Descrição -->
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:text="Descrição..."
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/tv_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+            <ImageButton
+                android:id="@+id/btn_nao"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/red"
+                android:contentDescription="Não"
+                android:src="@drawable/ic_nao"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_sim"
+                app:tint="@color/black" />
+
+            <ImageButton
+                android:id="@+id/btn_sim"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/green"
+                android:contentDescription="Sim"
+                android:src="@drawable/ic_sim"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black" />
+
+            <!-- Tags CT e Horário -->
+            <TextView
+                android:id="@+id/tag_ct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:background="@color/cinza"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="CT"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/image_icon"
+                app:layout_constraintTop_toBottomOf="@+id/tv_description" />
+
+            <TextView
+                android:id="@+id/tag_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:background="@color/cinza"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="09h - 19h"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/tag_ct"
+                app:layout_constraintTop_toBottomOf="@+id/tv_description" />
+
+            <!-- Novo Texto abaixo das tags -->
+            <!-- Solicitante -->
+            <TextView
+                android:id="@+id/tv_solicitante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Solicitante:"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintMarginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tag_time" />
+
+            <!-- Horário -->
+            <TextView
+                android:id="@+id/tv_horario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Horário:"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintMarginTop="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_solicitante" />
+
+            <!-- Nome do Evento -->
+            <TextView
+                android:id="@+id/tv_nome_evento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Nome do Evento:"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintMarginTop="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_horario" />
+
+            <!-- Espaço Inferior para Ajustes -->
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_nome_evento"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/nome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="David Washington Freitas Lima"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/tv_solicitante"
+                app:layout_constraintTop_toBottomOf="@+id/tag_time" />
+
+            <TextView
+                android:id="@+id/hora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textColor="@color/black"
+                android:text="09h - 13h"
+                app:layout_constraintStart_toEndOf="@+id/tv_horario"
+                app:layout_constraintTop_toBottomOf="@+id/nome" />
+
+            <TextView
+                android:id="@+id/nomeevento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Evento"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/tv_nome_evento"
+                app:layout_constraintTop_toBottomOf="@+id/hora" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
