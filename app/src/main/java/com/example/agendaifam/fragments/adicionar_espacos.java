@@ -17,9 +17,12 @@ import com.example.agendaifam.R;
 import com.example.agendaifam.models.mEspacos;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,9 +39,9 @@ public class adicionar_espacos extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private EditText nome, descricao, local;
+    private EditText nome, descricao, edt_cod_departamento;
     private Button confirmar;
-
+    private int cod_departamento;
     private String usuarioID;
 
     public adicionar_espacos() {
@@ -87,25 +90,25 @@ public class adicionar_espacos extends Fragment {
         confirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            salvarDadosespaco(nome, descricao, local);
+            salvarDadosespaco(nome, descricao, edt_cod_departamento);
             }
         });
 
 
     }
 
-    public void salvarDadosespaco(EditText nome, EditText  descricao, EditText local){
+    public void salvarDadosespaco(EditText nome, EditText  descricao, EditText cod_departamento){
         String nome_espaco = nome.getText().toString();
         String descricao_espaco = descricao.getText().toString();
-        String local_espaco = local.getText().toString();
+        int codigo = Integer.parseInt(cod_departamento.getText().toString());
 
-        mEspacos espaco = new mEspacos(nome_espaco, descricao_espaco, local_espaco, null);
+        mEspacos espaco = new mEspacos(nome_espaco, descricao_espaco, null, null, codigo);
 
         FirebaseFirestore banco = FirebaseFirestore.getInstance();
 
-//        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        CollectionReference documentReference = banco.collection("espaco");
+        CollectionReference documentReference = banco.collection("espaco").document(String.valueOf(codigo)).collection(usuarioID);
         documentReference.add(espaco).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
@@ -115,7 +118,7 @@ public class adicionar_espacos extends Fragment {
 
                 nome.setText("");
                 descricao.setText("");
-                local.setText("");
+                edt_cod_departamento.setText("");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -133,7 +136,7 @@ public class adicionar_espacos extends Fragment {
     private void iniciarComponentes(){
         nome = requireView().findViewById(R.id.edit_space_name);
         descricao = requireView().findViewById(R.id.edit_description);
-        local = requireView().findViewById(R.id.edit_local);
+        edt_cod_departamento = requireView().findViewById(R.id.edit_cod_departamento);
 
         confirmar = requireView().findViewById(R.id.button_confirm);
 

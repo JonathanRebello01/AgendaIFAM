@@ -1,14 +1,40 @@
 package com.example.agendaifam.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.CollapsibleActionView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.agendaifam.R;
+import com.example.agendaifam.adapter.EspacoAdapter;
+import com.example.agendaifam.models.mEspacos;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +51,11 @@ public class ControlRoomFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private RecyclerView rv_espaco;
+    private Button add_espaco;
+    private final FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
+    private ArrayList<mEspacos> espacosExistentes = new ArrayList<>();
+    private String usuarioID;
 
     public ControlRoomFragment() {
         // Required empty public constructor
@@ -63,4 +94,52 @@ public class ControlRoomFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_control_room, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        iniciarComponentes();
+
+        add_espaco.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction().replace(R.id.fragment_control_room, new adicionar_espacos()).commit();
+            }
+        });
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("ContaPrefs", Context.MODE_PRIVATE);
+
+        int codigo = sharedPreferences.getInt("codigo", 0); // Valor padrão se não existir
+        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        if (codigo != 0) {
+            List<mEspacos> espacoList = new ArrayList<>();
+
+            CollectionReference getdata = banco_recuperar.collection("espaco" + "/" + codigo + "/" + usuarioID);
+
+            getdata.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            mEspacos espaco = document.toObject(mEspacos.class);
+                            espacoList.add(espaco);
+                        }
+                        rv_espaco.setAdapter(new EspacoAdapter(espacoList));
+                        rv_espaco.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                    } else {
+                        Log.d("Firestore", "Erro ao recuperar documentos: ", task.getException());
+                    }
+                }
+            });
+        }
+    }
+
+    private void iniciarComponentes(){
+        rv_espaco = requireView().findViewById(R.id.rv_locais);
+        add_espaco = requireView().findViewById(R.id.button_add_espaco);
+    }
+
 }
