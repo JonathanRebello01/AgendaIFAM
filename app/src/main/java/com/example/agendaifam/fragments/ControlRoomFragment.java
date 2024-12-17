@@ -54,7 +54,6 @@ public class ControlRoomFragment extends Fragment {
     private RecyclerView rv_espaco;
     private Button add_espaco;
     private final FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
-    private ArrayList<mEspacos> espacosExistentes = new ArrayList<>();
     private String usuarioID;
 
     public ControlRoomFragment() {
@@ -116,7 +115,7 @@ public class ControlRoomFragment extends Fragment {
         if (codigo != 0) {
             List<mEspacos> espacoList = new ArrayList<>();
 
-            CollectionReference getdata = banco_recuperar.collection("espaco" + "/" + codigo + "/" + usuarioID);
+            CollectionReference getdata = banco_recuperar.collection("espaco" + "/" + codigo + "/" + "data");
 
             getdata.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -134,6 +133,8 @@ public class ControlRoomFragment extends Fragment {
                     }
                 }
             });
+        }else {
+            Toast.makeText(getContext(), "Você não tem permissão para acessar esse recurso", Toast.LENGTH_LONG).show();
         }
     }
 

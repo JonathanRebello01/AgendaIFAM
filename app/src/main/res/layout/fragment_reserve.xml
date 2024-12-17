@@ -1,128 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".fragments.ReserveFragment">
+    tools:context=".fragments.MenuFragment"
+    android:id="@+id/fragment_control_room">
 
     <!-- Logo centralizada no topo -->
     <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:paddingTop="32dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ifam_logo"
-            android:contentDescription="Logo IFAM" />
+            android:contentDescription="Logo IFAM"
+            android:src="@drawable/ifam_logo" />
 
         <TextView
             android:id="@+id/text_title_agenda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Agendamentos"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp" />
+            android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Box verde dos espaços -->
-    <LinearLayout
-        android:id="@+id/layout_room_container"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginBottom="16dp"
-        android:background="#8AB364"
-        android:elevation="4dp"
-        android:gravity="center"
-        android:padding="16dp">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_reservas"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        tools:listitem="@layout/item_reserva"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <!-- Imagem à esquerda do auditório -->
-        <ImageView
-            android:id="@+id/image_room_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="Imagem da sala"
-            android:src="@drawable/auditorio_icon" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <!-- Tipo de sala -->
-            <TextView
-                android:id="@+id/text_room_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="Auditório"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <!-- Descrição da sala -->
-            <TextView
-                android:id="@+id/text_room_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="Descrição da sala"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="start"
-                android:orientation="horizontal">
-
-                <!-- Horário -->
-                <TextView
-                    android:id="@+id/text_room_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:background="@android:color/darker_gray"
-                    android:padding="8dp"
-                    android:text="Horário: 09h - 19:00"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-
-                <!-- Local -->
-                <TextView
-                    android:id="@+id/text_room_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/darker_gray"
-                    android:padding="8dp"
-                    android:text="Local: CT"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <!-- Botão de edição -->
-            <Button
-                android:id="@+id/btn_edit_room"
-                style="@style/CustomButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginTop="10dp"
-                android:contentDescription="Botão de editar"
-                android:gravity="center"
-                android:text="Status: (RESERVADO)" />
-        </LinearLayout>
-    </LinearLayout>
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

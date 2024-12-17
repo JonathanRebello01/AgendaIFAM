@@ -108,7 +108,7 @@ public class adicionar_espacos extends Fragment {
 
         usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        CollectionReference documentReference = banco.collection("espaco").document(String.valueOf(codigo)).collection(usuarioID);
+        CollectionReference documentReference = banco.collection("espaco").document(String.valueOf(codigo)).collection("data");
         documentReference.add(espaco).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
