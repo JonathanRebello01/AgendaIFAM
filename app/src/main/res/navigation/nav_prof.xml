@@ -16,8 +16,8 @@
         android:label="fragment_reserve"
         tools:layout="@layout/fragment_reserve" />
     <fragment
-        android:id="@+id/menu_calendar"
+        android:id="@+id/menu_solicitation"
         android:name="com.example.agendaifam.fragments.CalendarFragment"
-        android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" />
+        android:label="fragment_solicitation_prof"
+        tools:layout="@layout/fragment_solicitation_prof" />
 </navigation>

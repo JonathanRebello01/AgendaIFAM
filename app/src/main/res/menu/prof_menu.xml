@@ -9,8 +9,8 @@
         android:title="Menu"
         android:enabled="true" />
     <item
-        android:id="@+id/menu_calendar"
-        android:icon="@drawable/ic_menu_calendar"
-        android:title="Calendário" />
+        android:id="@+id/menu_solicitation"
+        android:icon="@drawable/ic_solicitation"
+        android:title="Solicitações" />
 
 </menu>

@@ -131,8 +131,6 @@ public class adicionar_espacos extends Fragment {
 
     }
 
-
-
     private void iniciarComponentes(){
         nome = requireView().findViewById(R.id.edit_space_name);
         descricao = requireView().findViewById(R.id.edit_description);
