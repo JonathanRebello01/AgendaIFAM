@@ -15,12 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.agendaifam.GestorActivity;
-import com.example.agendaifam.ProfessorActivity;
 import com.example.agendaifam.R;
-import com.example.agendaifam.models.mUsuario;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;

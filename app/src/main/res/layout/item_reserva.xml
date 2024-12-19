@@ -22,16 +22,18 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:background="#8AB364"
+            android:background="@color/green_claro"
             android:gravity="center"
             android:padding="16dp">
 
             <!-- Imagem à esquerda do auditório -->
             <ImageView
                 android:id="@+id/image_room_icon"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginEnd="16dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/green"
+                android:scaleType="centerInside"
                 android:contentDescription="Imagem da sala"
                 android:src="@drawable/auditorio_icon" />
 
@@ -55,7 +57,7 @@
                 <!-- Descrição da sala -->
                 <TextView
                     android:id="@+id/texto_descricao_reserva"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
                     android:text="Descrição da sala"
@@ -70,25 +72,26 @@
                     android:orientation="horizontal">
 
                     <!-- Horário -->
+
+                    <!-- Local -->
                     <TextView
                         android:id="@+id/text_room_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
-                        android:background="@android:color/darker_gray"
+                        android:background="@color/cinza"
                         android:padding="8dp"
-                        android:text="Selecionar Data e hora"
+                        android:text="CT"
                         android:textColor="@android:color/black"
                         android:textSize="14sp" />
 
-                    <!-- Local -->
                     <TextView
                         android:id="@+id/text_room_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/darker_gray"
+                        android:background="@color/cinza"
                         android:padding="8dp"
-                        android:text="Local: CT"
+                        android:text="00h - 00h"
                         android:textColor="@android:color/black"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -98,11 +101,11 @@
                     android:id="@+id/btn_edit_room"
                     style="@style/CustomButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:contentDescription="Botão de editar"
                     android:gravity="center"
-                    android:text="Status: (RESERVADO)" />
+                    android:text="Reservar" />
             </LinearLayout>
 
         </LinearLayout>

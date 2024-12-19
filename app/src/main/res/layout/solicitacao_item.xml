@@ -174,6 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
                 android:text="David Washington Freitas Lima"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@+id/tv_solicitante"
@@ -184,8 +185,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:textColor="@color/black"
+                android:layout_marginTop="8dp"
                 android:text="09h - 13h"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@+id/tv_horario"
                 app:layout_constraintTop_toBottomOf="@+id/nome" />
 
@@ -194,6 +196,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
                 android:text="Evento"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@+id/tv_nome_evento"
