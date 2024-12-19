@@ -2,7 +2,7 @@
     <item
         android:id="@+id/menu_bookings"
         android:icon="@drawable/ic_menu_books"
-        android:title="Reservas" />
+        android:title="Reservar" />
     <item
         android:id="@+id/menu_home"
         android:icon="@drawable/ic_menu_home"
