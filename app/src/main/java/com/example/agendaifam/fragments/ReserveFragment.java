@@ -170,7 +170,6 @@ public class ReserveFragment extends Fragment {
 
     private void iniciarComponentes(){
         rv_reservaSalas = requireView().findViewById(R.id.rv_reservas);
-
     }
 
 }

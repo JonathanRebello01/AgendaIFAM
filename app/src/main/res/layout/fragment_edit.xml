@@ -65,14 +65,18 @@
             android:text="Horários:"
             android:textSize="16sp"
             android:textColor="@android:color/black"
-            android:layout_marginBottom="4dp" />
+            android:visibility="gone"
+            android:layout_marginBottom="4dp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"
+            >
 
             <Spinner
                 android:id="@+id/start_time"

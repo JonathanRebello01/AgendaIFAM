@@ -64,7 +64,7 @@
 
             <!-- Local e Horário -->
             <TextView
-                android:id="@+id/text_room_time"
+                android:id="@+id/selecionar_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -72,14 +72,14 @@
                 android:background="@color/cinza"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                android:text="Setor"
+                android:text="Data"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/image_room_icon"
                 app:layout_constraintTop_toBottomOf="@+id/texto_descricao_reserva" />
 
             <TextView
-                android:id="@+id/text_room_location"
+                android:id="@+id/selecionar_horario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -90,12 +90,12 @@
                 android:text="Horario"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@+id/text_room_time"
+                app:layout_constraintStart_toEndOf="@+id/selecionar_data"
                 app:layout_constraintTop_toBottomOf="@+id/texto_descricao_reserva" />
 
             <!-- Botão -->
             <Button
-                android:id="@+id/btn_edit_room"
+                android:id="@+id/btn_reservar"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="8dp"
@@ -106,7 +106,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_room_icon"
-                app:layout_constraintTop_toBottomOf="@+id/text_room_time" />
+                app:layout_constraintTop_toBottomOf="@+id/selecionar_data" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

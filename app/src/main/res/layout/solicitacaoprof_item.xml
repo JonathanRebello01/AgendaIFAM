@@ -64,7 +64,7 @@
 
             <!-- Local e Horário -->
             <TextView
-                android:id="@+id/text_room_time"
+                android:id="@+id/data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -72,7 +72,7 @@
                 android:background="@color/cinza"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                android:text="Setor"
+                android:text="Data"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/image_room_icon"
@@ -90,7 +90,7 @@
                 android:text="Horario"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@+id/text_room_time"
+                app:layout_constraintStart_toEndOf="@+id/data"
                 app:layout_constraintTop_toBottomOf="@+id/texto_descricao_reserva" />
 
             <!-- Botão -->
@@ -108,7 +108,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_room_icon"
-                app:layout_constraintTop_toBottomOf="@+id/text_room_time" />
+                app:layout_constraintTop_toBottomOf="@+id/data" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

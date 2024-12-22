@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.agendaifam.R;
 import com.example.agendaifam.models.mEspacos;
 
+import java.text.BreakIterator;
 import java.util.List;
 
 public class EspacoAdapter extends RecyclerView.Adapter  {

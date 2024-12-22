@@ -102,16 +102,19 @@ public class adicionar_espacos extends Fragment {
         String descricao_espaco = descricao.getText().toString();
         int codigo = Integer.parseInt(cod_departamento.getText().toString());
 
-        mEspacos espaco = new mEspacos(nome_espaco, descricao_espaco, null, null, codigo);
 
         FirebaseFirestore banco = FirebaseFirestore.getInstance();
 
+        CollectionReference collectionReference = banco.collection("espaco").document(String.valueOf(codigo)).collection("data");
+        String documentId = collectionReference.document().getId();
+
+        mEspacos espaco = new mEspacos(nome_espaco, descricao_espaco, null, documentId, codigo);
+
         usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        CollectionReference documentReference = banco.collection("espaco").document(String.valueOf(codigo)).collection("data");
-        documentReference.add(espaco).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        collectionReference.document(documentId).set(espaco).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
+            public void onSuccess(Void unused) {
                 Log.d("db", "Sucesso ao salvar os dados");
 
                 Toast.makeText(requireContext(), "Sucesso ao salvar dados!", Toast.LENGTH_LONG).show();
@@ -127,14 +130,12 @@ public class adicionar_espacos extends Fragment {
                 Toast.makeText(requireContext(), "ERRO ao salvar dados!", Toast.LENGTH_LONG).show();
             }
         });
-
-
     }
 
     private void iniciarComponentes(){
         nome = requireView().findViewById(R.id.edit_space_name);
         descricao = requireView().findViewById(R.id.edit_description);
-        edt_cod_departamento = requireView().findViewById(R.id.edit_cod_departamento);
+        edt_cod_departamento = requireView().findViewById(R.id.add_cod_departamento);
 
         confirmar = requireView().findViewById(R.id.button_confirm);
 
