@@ -1,8 +1,11 @@
 package com.example.agendaifam.adapter;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,11 +37,14 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ReservaAdapter extends RecyclerView.Adapter {
 
     private List<mEspacos> espacoList;
+    private Context ctx;
 
-    public ReservaAdapter(List<mEspacos> espacoList) {
+
+
+    public ReservaAdapter(List<mEspacos> espacoList, Context ctx) {
         this.espacoList = espacoList;
+        this.ctx = ctx;
     }
-
 
     @NonNull
     @Override
@@ -135,6 +141,9 @@ public class ReservaAdapter extends RecyclerView.Adapter {
                 CollectionReference collectionReference = db.collection("reservas");
                 String documentId = collectionReference.document().getId();
                 reservaAtual.setIdReserva(documentId);
+                SharedPreferences sharedPreferences = ctx.getSharedPreferences("ContaPrefs", Context.MODE_PRIVATE);
+                String nome = sharedPreferences.getString("nome", null);
+                reservaAtual.setNomeProfessorReserva(nome);
 
                 collectionReference.document(documentId).set(reservaAtual).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override

@@ -128,19 +128,14 @@ public class ReserveFragment extends Fragment {
                         System.out.println("teste "+ codigo);
                         // Para cada código, fazemos a consulta nos espaços
                         CollectionReference espacoRef = banco_recuperar.collection("espaco").document(codigo).collection("data");
-                        System.out.println(usuarioID+"sadk");
-///espaco/1/8mm6mq3pT1RtMatY0uKusiavb4x2/3wsATvVuFx59dfhvAWxP
+
 
                         espacoRef.get().addOnCompleteListener(taskEspacos -> {
-                            System.out.println("aaaaaaaaaaaaaaa");
 
                             if (taskEspacos.isSuccessful()) {
-                                System.out.println("Número de documentos encontrados: " + taskEspacos.getResult().size());
                                 for (QueryDocumentSnapshot espacoDoc : taskEspacos.getResult()) {
-                                    System.out.println("bbbbbbbbbbb");
                                     mEspacos espaco = espacoDoc.toObject(mEspacos.class);
                                     espacoList.add(espaco); // Adiciona o espaço à lista
-                                    System.out.println("teste p "+ espacoList.size());
                                 }
                             } else {
                                 Log.d("Firestore", "Erro ao recuperar espaços: ", taskEspacos.getException());
@@ -148,11 +143,10 @@ public class ReserveFragment extends Fragment {
 
                             // Decrementa o contador após cada consulta
                             consultasPendentes[0]--;
-                            System.out.println("teste "+ consultasPendentes[0]);
 
                             // Se todas as consultas forem concluídas, atualize o RecyclerView
                             if (consultasPendentes[0] == 0) {
-                                rv_reservaSalas.setAdapter(new ReservaAdapter(espacoList));
+                                rv_reservaSalas.setAdapter(new ReservaAdapter(espacoList, requireContext()));
                                 rv_reservaSalas.setLayoutManager(new LinearLayoutManager(getContext()));
                             }
                         });

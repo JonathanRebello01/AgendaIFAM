@@ -40,7 +40,7 @@
 
             <!-- Título -->
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/nome_solicitacao_gest_iten"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -53,14 +53,14 @@
 
             <!-- Descrição -->
             <TextView
-                android:id="@+id/tv_description"
-                android:layout_width="200dp"
+                android:id="@+id/descricao_local_solicitacao_gest_iten"
+                android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:text="Descrição..."
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@id/tv_title"
-                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+                app:layout_constraintStart_toStartOf="@id/nome_solicitacao_gest_iten"
+                app:layout_constraintTop_toBottomOf="@id/nome_solicitacao_gest_iten" />
 
             <ImageButton
                 android:id="@+id/btn_nao"
@@ -71,6 +71,7 @@
                 android:background="@color/red"
                 android:contentDescription="Não"
                 android:src="@drawable/ic_nao"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_sim"
                 app:tint="@color/black" />
@@ -86,11 +87,25 @@
                 android:src="@drawable/ic_sim"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btn_nao"
                 app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/descricao_solicitacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ACT/NEG"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@id/btn_nao"
+                app:layout_constraintEnd_toEndOf="@+id/btn_sim"
+                app:layout_constraintStart_toStartOf="@+id/btn_nao"
+                app:layout_constraintTop_toBottomOf="@id/btn_sim" />
 
             <!-- Tags CT e Horário -->
             <TextView
-                android:id="@+id/tag_ct"
+                android:id="@+id/data_dolicitacao_gest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -98,26 +113,27 @@
                 android:background="@color/cinza"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                android:text="CT"
+                android:text="Data"
                 android:textColor="@color/black"
                 android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/descricao_solicitacao"
                 app:layout_constraintStart_toEndOf="@+id/image_icon"
-                app:layout_constraintTop_toBottomOf="@+id/tv_description" />
+                app:layout_constraintTop_toBottomOf="@+id/descricao_local_solicitacao_gest_iten" />
 
             <TextView
-                android:id="@+id/tag_time"
+                android:id="@+id/hora_iten_solicitacao_gest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="6dp"
                 android:background="@color/cinza"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
                 android:text="09h - 19h"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@+id/tag_ct"
-                app:layout_constraintTop_toBottomOf="@+id/tv_description" />
+                app:layout_constraintEnd_toEndOf="@+id/data_dolicitacao_gest"
+                app:layout_constraintStart_toStartOf="@+id/data_dolicitacao_gest"
+                app:layout_constraintTop_toBottomOf="@+id/data_dolicitacao_gest" />
 
             <!-- Novo Texto abaixo das tags -->
             <!-- Solicitante -->
@@ -130,9 +146,8 @@
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tag_time" />
+                app:layout_constraintTop_toBottomOf="@+id/hora_iten_solicitacao_gest" />
 
             <!-- Horário -->
             <TextView
@@ -145,7 +160,8 @@
                 android:textSize="14sp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_solicitante" />
+                app:layout_constraintTop_toBottomOf="@id/tv_solicitante"
+                android:visibility="gone"/>
 
             <!-- Nome do Evento -->
             <TextView
@@ -155,11 +171,12 @@
                 android:layout_marginStart="8dp"
                 android:text="Nome do Evento:"
                 android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_horario" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_solicitante" />
 
             <!-- Espaço Inferior para Ajustes -->
             <Space
@@ -174,11 +191,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
                 android:text="David Washington Freitas Lima"
                 android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_solicitante"
                 app:layout_constraintStart_toEndOf="@+id/tv_solicitante"
-                app:layout_constraintTop_toBottomOf="@+id/tag_time" />
+                app:layout_constraintTop_toTopOf="@+id/tv_solicitante" />
 
             <TextView
                 android:id="@+id/hora"
@@ -189,18 +206,22 @@
                 android:text="09h - 13h"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@+id/tv_horario"
-                app:layout_constraintTop_toBottomOf="@+id/nome" />
+                app:layout_constraintTop_toBottomOf="@+id/nome"
+                android:visibility="gone"
+                />
 
             <TextView
                 android:id="@+id/nomeevento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
                 android:text="Evento"
                 android:textColor="@color/black"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_nome_evento"
                 app:layout_constraintStart_toEndOf="@+id/tv_nome_evento"
-                app:layout_constraintTop_toBottomOf="@+id/hora" />
+                app:layout_constraintTop_toTopOf="@+id/tv_nome_evento"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -3,6 +3,8 @@ package com.example.agendaifam.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +26,7 @@ public class SolicitacaoProfAdapter extends RecyclerView.Adapter{
 
     public SolicitacaoProfAdapter(List<mReserva> reservaList) {
         if (reservaList == null) {
-            this.reservaProfList = new ArrayList<>();  // Inicializa a lista com um ArrayList vazio se for null
+            this.reservaProfList = new ArrayList<>();
         } else {
             this.reservaProfList = reservaList;
         }
