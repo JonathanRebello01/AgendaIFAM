@@ -11,8 +11,8 @@
     <!-- Logo centralizada no topo -->
     <ImageView
         android:id="@+id/ifam_logo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/ifam_logo"
         android:contentDescription="Logo IFAM"
         android:layout_gravity="center"
