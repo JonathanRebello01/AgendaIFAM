@@ -56,9 +56,7 @@ public class CadastroFragment extends Fragment {
     private SwitchCompat tipoConta;
     private final FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
 
-    private FirebaseAuth auth;
-
-    String[] mensagens = {"Preencha todos os campo", "Cadastro realizado com sucesso!"};
+    String[] mensagens = {"Preencha todos os campos", "Cadastro realizado com sucesso!"};
     String  usuarioID;
 
     public CadastroFragment() {
@@ -93,7 +91,6 @@ public class CadastroFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        auth = FirebaseAuth.getInstance();
         iniciarcomponentes(view);
         tipoConta.setOnClickListener(new View.OnClickListener() {
             @Override

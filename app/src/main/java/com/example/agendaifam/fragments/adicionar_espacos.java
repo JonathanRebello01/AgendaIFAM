@@ -1,5 +1,7 @@
 package com.example.agendaifam.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,39 +26,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.UUID;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link adicionar_espacos#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class adicionar_espacos extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private EditText nome, descricao, edt_cod_departamento;
     private Button confirmar;
-    private int cod_departamento;
-    private String usuarioID;
+    private Context ctx;
+    private int codigoPerfil;
 
     public adicionar_espacos() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment sdicionar_espacos.
-     */
-    // TODO: Rename and change types and number of parameters
     public adicionar_espacos newInstance(String param1, String param2) {
         adicionar_espacos fragment = new adicionar_espacos();
         Bundle args = new Bundle();
@@ -69,10 +50,10 @@ public class adicionar_espacos extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        ctx = requireContext();
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences("ContaPrefs", Context.MODE_PRIVATE);
+        int codigo = sharedPreferences.getInt("codigo", 0);
+        codigoPerfil = codigo;
     }
 
     @Override
@@ -86,31 +67,38 @@ public class adicionar_espacos extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         iniciarComponentes();
+        edt_cod_departamento.setHint(String.valueOf(codigoPerfil));
+        edt_cod_departamento.setFocusable(false);
+        edt_cod_departamento.setClickable(false);
 
         confirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            salvarDadosespaco(nome, descricao, edt_cod_departamento);
+                String nm = nome.getText().toString();
+                String desc = descricao.getText().toString();
+                String cod = edt_cod_departamento.getText().toString();
+                if (nm.isEmpty() || desc.isEmpty()) {
+                    Toast.makeText(requireContext(), "Preencha todos os campos", Toast.LENGTH_LONG).show();
+                } else {
+                    salvarDadosespaco(nome, descricao, codigoPerfil);
+                }
             }
         });
 
 
     }
 
-    public void salvarDadosespaco(EditText nome, EditText  descricao, EditText cod_departamento){
+    public void salvarDadosespaco(EditText nome, EditText  descricao, int codigoPerfil){
         String nome_espaco = nome.getText().toString();
         String descricao_espaco = descricao.getText().toString();
-        int codigo = Integer.parseInt(cod_departamento.getText().toString());
 
 
         FirebaseFirestore banco = FirebaseFirestore.getInstance();
 
-        CollectionReference collectionReference = banco.collection("espaco").document(String.valueOf(codigo)).collection("data");
+        CollectionReference collectionReference = banco.collection("espaco").document(String.valueOf(codigoPerfil)).collection("data");
         String documentId = collectionReference.document().getId();
 
-        mEspacos espaco = new mEspacos(nome_espaco, descricao_espaco, null, documentId, codigo);
-
-        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mEspacos espaco = new mEspacos(nome_espaco, descricao_espaco, null, documentId, codigoPerfil);
 
         collectionReference.document(documentId).set(espaco).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

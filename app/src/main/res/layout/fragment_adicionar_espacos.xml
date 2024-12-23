@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     android:background="@android:color/white">
 
@@ -38,7 +39,10 @@
             android:hint="Digite o nome do espaço"
             android:background="@drawable/spinner_border"
             android:padding="8dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:inputType="text"
+            android:maxLines="1"
+            android:imeOptions="actionNext"/>
 
         <!-- Descrição -->
         <TextView
@@ -55,7 +59,10 @@
             android:hint="Digite uma descrição"
             android:background="@drawable/spinner_border"
             android:padding="8dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:inputType="text"
+            android:maxLines="1"
+            android:imeOptions="actionDone"/>
 
         <!-- Horários -->
         <TextView
@@ -108,16 +115,17 @@
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
+
+        <!-- Botão Confirmar -->
+
         <EditText
             android:id="@+id/add_cod_departamento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/spinner_border"
             android:hint="Digite o código do departamento"
-            android:padding="8dp"
-            android:layout_marginBottom="32dp" />
+            android:padding="8dp" />
 
-        <!-- Botão Confirmar -->
         <Button
             android:id="@+id/button_confirm"
             android:layout_width="match_parent"
