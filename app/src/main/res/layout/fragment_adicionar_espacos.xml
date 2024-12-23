@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,17 +33,19 @@
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/edit_space_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite o nome do espaço"
-            android:background="@drawable/spinner_border"
-            android:padding="8dp"
             android:layout_marginBottom="16dp"
+            android:background="@drawable/spinner_border"
+            android:hint="Digite o nome do espaço"
+            android:imeOptions="actionNext"
             android:inputType="text"
             android:maxLines="1"
-            android:imeOptions="actionNext"/>
+            android:padding="8dp"
+            android:minHeight="48dp" />
 
         <!-- Descrição -->
         <TextView
@@ -52,17 +55,19 @@
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/edit_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite uma descrição"
-            android:background="@drawable/spinner_border"
-            android:padding="8dp"
             android:layout_marginBottom="16dp"
+            android:background="@drawable/spinner_border"
+            android:hint="Digite uma descrição"
+            android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLines="1"
-            android:imeOptions="actionDone"/>
+            android:minHeight="48dp"
+            android:padding="8dp" />
 
         <!-- Horários -->
         <TextView
@@ -124,7 +129,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/spinner_border"
             android:hint="Digite o código do departamento"
-            android:padding="8dp" />
+            android:padding="8dp"
+            android:minHeight="48dp" />
 
         <Button
             android:id="@+id/button_confirm"

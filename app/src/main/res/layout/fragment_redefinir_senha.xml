@@ -75,14 +75,14 @@
 
         <TextView
             android:id="@+id/retornar_login"
+            style="@style/CustomLinkTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/underlined_text_retornar_para_login"
-            style="@style/CustomLinkTextStyle"
-            app:layout_constraintTop_toBottomOf="@id/redefinir"
-            app:layout_constraintStart_toStartOf="@id/redefinir"
             app:layout_constraintEnd_toEndOf="@id/redefinir"
-            />
+            app:layout_constraintStart_toStartOf="@id/redefinir"
+            app:layout_constraintTop_toBottomOf="@id/redefinir"
+            tools:ignore="TextSizeCheck" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

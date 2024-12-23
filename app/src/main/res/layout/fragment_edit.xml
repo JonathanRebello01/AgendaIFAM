@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
@@ -32,14 +33,16 @@
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/edit_space_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite o nome do espaço"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/spinner_border"
+            android:hint="Digite o nome do espaço"
             android:padding="8dp"
-            android:layout_marginBottom="16dp" />
+            android:minHeight="48dp" />
 
         <!-- Descrição -->
         <TextView
@@ -49,14 +52,16 @@
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
+
         <EditText
             android:id="@+id/edit_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite uma descrição"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/spinner_border"
-            android:padding="8dp"
-            android:layout_marginBottom="16dp" />
+            android:hint="Digite uma descrição"
+            android:minHeight="48dp"
+            android:padding="8dp" />
 
         <!-- Horários -->
         <TextView
@@ -118,6 +123,7 @@
             android:layout_marginBottom="32dp"
             android:background="@drawable/spinner_border"
             android:hint="Digite o código do departamento"
+            android:minHeight="48dp"
             android:padding="8dp" />
 
         <!-- Botões -->
