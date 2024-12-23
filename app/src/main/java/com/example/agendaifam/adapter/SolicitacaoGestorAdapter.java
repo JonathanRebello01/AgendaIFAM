@@ -113,6 +113,7 @@ public class SolicitacaoGestorAdapter extends RecyclerView.Adapter{
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(v.getContext(), "Reserva confirmada com sucesso!", Toast.LENGTH_SHORT).show();
+                        notifyItemChanged(position);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -133,6 +134,7 @@ public class SolicitacaoGestorAdapter extends RecyclerView.Adapter{
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(v.getContext(), "Reserva rejeitada com sucesso!", Toast.LENGTH_SHORT).show();
+                        notifyItemChanged(position);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
