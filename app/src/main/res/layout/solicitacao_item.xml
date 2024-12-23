@@ -109,39 +109,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="8dp"
                 android:background="@color/cinza"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
                 android:text="Data"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/descricao_solicitacao"
                 app:layout_constraintStart_toEndOf="@+id/image_icon"
                 app:layout_constraintTop_toBottomOf="@+id/descricao_local_solicitacao_gest_iten" />
 
+            <!-- Novo Texto abaixo das tags -->
+            <!-- Solicitante -->
             <TextView
                 android:id="@+id/hora_iten_solicitacao_gest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@color/cinza"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
                 android:text="09h - 19h"
-                android:layout_marginTop="5dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@+id/data_dolicitacao_gest"
-                app:layout_constraintStart_toStartOf="@+id/data_dolicitacao_gest"
-                app:layout_constraintTop_toBottomOf="@+id/data_dolicitacao_gest" />
+                app:layout_constraintStart_toEndOf="@+id/data_dolicitacao_gest"
+                app:layout_constraintTop_toBottomOf="@+id/descricao_local_solicitacao_gest_iten" />
 
-            <!-- Novo Texto abaixo das tags -->
-            <!-- Solicitante -->
             <TextView
                 android:id="@+id/tv_solicitante"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="Solicitante:"
                 android:textColor="@color/black"
                 android:textSize="14sp"

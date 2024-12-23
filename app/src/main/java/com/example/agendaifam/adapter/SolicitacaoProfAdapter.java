@@ -67,12 +67,12 @@ public class SolicitacaoProfAdapter extends RecyclerView.Adapter{
 
         if (status == 0) {
             solicitacaoProfViewHolder.status.setText("Pendente");
-        }
-        else if (status == 1) {
+            solicitacaoProfViewHolder.status.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.amarelo)); // Amarelo
+        } else if (status == 1) {
             solicitacaoProfViewHolder.status.setText("Aceito");
-        }
-        else if (status == 2) {
+        } else if (status == 2) {
             solicitacaoProfViewHolder.status.setText("Recusado");
+            solicitacaoProfViewHolder.status.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.red)); // Vermelho
         }
 
     }
