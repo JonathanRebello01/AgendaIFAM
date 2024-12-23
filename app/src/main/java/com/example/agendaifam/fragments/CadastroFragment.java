@@ -46,18 +46,14 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
  */
 public class CadastroFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private TextView login;
     private EditText edit_nome,edit_email,edit_senha, edt_codigo;
     private Button cadastrar;
-    SwitchCompat tipoConta;
+    private SwitchCompat tipoConta;
     private final FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
 
     private FirebaseAuth auth;
@@ -68,24 +64,12 @@ public class CadastroFragment extends Fragment {
     public CadastroFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CadastroFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static CadastroFragment newInstance(String param1, String param2) {
         CadastroFragment fragment = new CadastroFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
-//        private FirebaseAuth auth1;
-//        private EditText editEmail,edit_email, editSenha;
         return fragment;
     }
 
@@ -135,10 +119,22 @@ public class CadastroFragment extends Fragment {
                 String email = edit_email.getText().toString().trim();
                 String senha = edit_senha.getText().toString().trim();
 
-                if(nome.isEmpty() || email.isEmpty() || senha.isEmpty()){
-                    Toast.makeText(requireContext(), mensagens[0], Toast.LENGTH_LONG).show();
-                }else{
-                    CadastrarUsuario();
+
+                if (edt_codigo.getVisibility() != View.VISIBLE) {
+                    if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+                        Toast.makeText(requireContext(), mensagens[0], Toast.LENGTH_LONG).show();
+                    } else {
+                        CadastrarUsuario();
+                    }
+                }
+                else {
+                    String codigo = edt_codigo.getText().toString();
+
+                    if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || codigo.isEmpty()) {
+                        Toast.makeText(requireContext(), mensagens[0], Toast.LENGTH_LONG).show();
+                    } else {
+                        CadastrarUsuario();
+                    }
                 }
             }
         });

@@ -107,6 +107,7 @@
                 android:textColor="@color/black"
                 android:inputType="text"
                 android:maxLines="1"
+                android:imeOptions="actionNext"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
