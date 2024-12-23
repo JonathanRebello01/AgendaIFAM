@@ -1,5 +1,8 @@
 package com.example.agendaifam.fragments;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +19,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.agendaifam.GestorActivity;
+import com.example.agendaifam.ProfessorActivity;
 import com.example.agendaifam.R;
 import com.example.agendaifam.models.mProfessor;
 import com.example.agendaifam.models.mUsuario;
@@ -29,7 +34,10 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +58,7 @@ public class CadastroFragment extends Fragment {
     private EditText edit_nome,edit_email,edit_senha, edt_codigo;
     private Button cadastrar;
     SwitchCompat tipoConta;
+    private final FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
 
     private FirebaseAuth auth;
 
@@ -170,35 +179,86 @@ public class CadastroFragment extends Fragment {
     }
 
     private  void SalvaDadosUsuario(){
-        String nome = edit_nome.getText().toString();
-        String email = edit_email.getText().toString();
-        Integer codigo = edt_codigo.getText().length();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        mUsuario usuario;
-        if (codigo != null){
-            usuario = new mUsuario(nome, email, codigo);
+        String email = edit_email.getText().toString().trim();
+        String nome = edit_nome.getText().toString().trim();
+        int codigo;
+        if(!edt_codigo.getText().toString().trim().equals("") && Integer.parseInt(edt_codigo.getText().toString().trim()) != 0) {
+            codigo = Integer.parseInt(edt_codigo.getText().toString());
         }
         else {
-            usuario = new mUsuario(nome, email, null);
+            codigo = 0;
         }
-
         usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
-        documentReference.set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Log.d("db", "Sucesso ao salvar os dados");
+        mUsuario usuario;
 
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("db_error", "Erro ai salvar os dados" + e.toString());
+        if (codigo != 0) {
+            usuario = new mUsuario(nome, email, codigo);
 
+            usuario.setTipoConta("gestor");
+            DocumentReference getArea = banco_recuperar.collection("idGestao").document("codigos");
+            getArea.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                String areaGestao;
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                    if (codigo == 1){
+                        areaGestao = value.getString("1");
                     }
-                });
+                    else if (codigo == 2){
+                        areaGestao = value.getString("2");
+                    }
+                    else if (codigo == 3) {
+                        areaGestao = value.getString("3");
+                    }
+                    else {
+                        areaGestao = null;
+                    }
+
+                    usuario.setAreaGestao(areaGestao);
+
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
+                    documentReference.set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d("db", "Sucesso ao salvar os dados");
+
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("db_error", "Erro ai salvar os dados" + e.toString());
+
+                                }
+                            });
+
+
+                }
+            });
+        }
+        else {
+            usuario = new mUsuario(nome, email, codigo);
+            usuario.setTipoConta("professor");
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
+
+            documentReference.set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Log.d("db", "Sucesso ao salvar os dados");
+
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("db_error", "Erro ao salvar os dados" + e.toString());
+
+                }
+            });
+
+        }
     }
 
 

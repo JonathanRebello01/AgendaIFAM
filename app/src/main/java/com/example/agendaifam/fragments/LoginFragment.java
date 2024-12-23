@@ -176,27 +176,6 @@ public class LoginFragment extends Fragment {
                                         else if (codigo == 3) {
                                             areaGestao = value.getString("3");
                                         }
-                                        else if (codigo == 4) {
-                                            areaGestao = value.getString("4");
-                                        }
-                                        else if (codigo == 5) {
-                                            areaGestao = value.getString("5");
-                                        }
-                                        else if (codigo == 6) {
-                                            areaGestao = value.getString("6");
-                                        }
-                                        else if (codigo == 7) {
-                                            areaGestao = value.getString("7");
-                                        }
-                                        else if (codigo == 8) {
-                                            areaGestao = value.getString("8");
-                                        }
-                                        else if (codigo == 9) {
-                                            areaGestao = value.getString("9");
-                                        }
-                                        else if (codigo == 10) {
-                                            areaGestao = value.getString("10");
-                                        }
                                         else {
                                             areaGestao = null;
                                         }
