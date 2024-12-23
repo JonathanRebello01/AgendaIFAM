@@ -227,7 +227,7 @@ public class CadastroFragment extends Fragment {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.d("db_error", "Erro ai salvar os dados" + e.toString());
+                                    Log.d("db_error", "Erro ao salvar os dados" + e.toString());
 
                                 }
                             });

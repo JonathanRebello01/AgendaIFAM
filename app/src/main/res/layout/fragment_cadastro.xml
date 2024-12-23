@@ -68,7 +68,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ir_para_login"
             style="@style/CustomTextInputStyle"
-            android:textColorHint="@color/black">
+            android:textColorHint="@color/black"
+            >
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -79,6 +80,7 @@
                 android:textColor="@color/black"
                 android:inputType="text"
                 android:maxLines="1"
+                android:imeOptions="actionNext"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -131,7 +133,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Senha"
                 android:textColor="@color/black"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:maxLines="1"
                 />
         </com.google.android.material.textfield.TextInputLayout>
