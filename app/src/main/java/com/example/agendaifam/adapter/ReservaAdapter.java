@@ -137,25 +137,33 @@ public class ReservaAdapter extends RecyclerView.Adapter {
         reservaViewHolder.btn_reservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                CollectionReference collectionReference = db.collection("reservas");
-                String documentId = collectionReference.document().getId();
-                reservaAtual.setIdReserva(documentId);
-                SharedPreferences sharedPreferences = ctx.getSharedPreferences("ContaPrefs", Context.MODE_PRIVATE);
-                String nome = sharedPreferences.getString("nome", null);
-                reservaAtual.setNomeProfessorReserva(nome);
-
-                collectionReference.document(documentId).set(reservaAtual).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    Toast.makeText(v.getContext(), "Reserva realizada com sucesso!", Toast.LENGTH_SHORT).show();
+                if (reservaAtual.getDataReserva() != null && reservaAtual.getHoraInicioReserva() != null){
+                    realisarReserva(reservaAtual, v);
+                } else {
+                    Toast.makeText(ctx, "Selecione a data e a hora da reserva", Toast.LENGTH_LONG).show();
                 }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(v.getContext(), "Erro ao realizar a reserva!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            }
+        });
+    }
+
+    private void realisarReserva(mReserva reservaAtual, View v){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = db.collection("reservas");
+        String documentId = collectionReference.document().getId();
+        reservaAtual.setIdReserva(documentId);
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences("ContaPrefs", Context.MODE_PRIVATE);
+        String nome = sharedPreferences.getString("nome", null);
+        reservaAtual.setNomeProfessorReserva(nome);
+
+        collectionReference.document(documentId).set(reservaAtual).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(v.getContext(), "Reserva realizada com sucesso!", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(v.getContext(), "Erro ao realizar a reserva!", Toast.LENGTH_SHORT).show();
             }
         });
     }
