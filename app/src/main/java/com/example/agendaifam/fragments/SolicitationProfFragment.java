@@ -116,11 +116,9 @@ public class SolicitationProfFragment extends Fragment {
 
                         if (Objects.equals(reserva.getIdProfessorReserva(), usuarioID)) {
                             reservaList.add(reserva);
-                            System.out.println("teste" +reserva);
                         }
-                        System.out.println(reservaList.get(0));
-                        rv_solicitacao_prof.setAdapter(new SolicitacaoProfAdapter(reservaList));
-                        rv_solicitacao_prof.setLayoutManager(new LinearLayoutManager(getContext()));
+                            rv_solicitacao_prof.setAdapter(new SolicitacaoProfAdapter(reservaList));
+                            rv_solicitacao_prof.setLayoutManager(new LinearLayoutManager(getContext()));
                     }
                 }
             });

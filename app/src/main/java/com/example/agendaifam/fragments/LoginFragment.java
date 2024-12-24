@@ -153,10 +153,10 @@ public class LoginFragment extends Fragment {
                                 String tipoConta;
 
                                 if (codigo != 0 && codigo != null){
-                                    tipoConta = "Gestor";
+                                    tipoConta = "gestor";
                                 }
                                 else {
-                                    tipoConta = "Professor";
+                                    tipoConta = "professor";
                                 }
                                 DocumentReference getArea = banco_recuperar.collection("idGestao").document("codigos");
                                 getArea.addSnapshotListener(new EventListener<DocumentSnapshot>() {

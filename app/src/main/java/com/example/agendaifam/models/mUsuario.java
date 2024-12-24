@@ -13,7 +13,7 @@ public class mUsuario {
         this.codigo = codigo;
     }
 
-    public mUsuario(String nome, String email, Integer codigo, String tipoConta, String areaGestao) {
+    public mUsuario(String nome, String email, Integer codigo, String areaGestao, String tipoConta) {
         this.nome = nome;
         this.email = email;
         this.codigo = codigo;

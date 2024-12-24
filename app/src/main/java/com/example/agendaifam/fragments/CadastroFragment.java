@@ -19,10 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.agendaifam.GestorActivity;
-import com.example.agendaifam.ProfessorActivity;
 import com.example.agendaifam.R;
-import com.example.agendaifam.models.mProfessor;
 import com.example.agendaifam.models.mUsuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -186,8 +183,6 @@ public class CadastroFragment extends Fragment {
 
         if (codigo != 0) {
             usuario = new mUsuario(nome, email, codigo);
-
-            usuario.setTipoConta("gestor");
             DocumentReference getArea = banco_recuperar.collection("idGestao").document("codigos");
             getArea.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                 String areaGestao;
@@ -205,6 +200,7 @@ public class CadastroFragment extends Fragment {
                     else {
                         areaGestao = null;
                     }
+                    usuario.setTipoConta("gestor");
 
                     usuario.setAreaGestao(areaGestao);
 
@@ -231,11 +227,11 @@ public class CadastroFragment extends Fragment {
         }
         else {
             usuario = new mUsuario(nome, email, codigo);
-            usuario.setTipoConta("professor");
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
-
+            usuario.setTipoConta("professor");
+            usuario.setAreaGestao(null);
             documentReference.set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
