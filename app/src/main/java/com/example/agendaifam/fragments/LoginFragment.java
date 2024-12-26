@@ -199,7 +199,7 @@ public class LoginFragment extends Fragment {
 
                                                         editor.apply();
 
-                                                        if (tipoConta.equals("Gestor")){
+                                                        if (tipoConta.equals("gestor")){
                                                             Intent intent = new Intent(ctx, GestorActivity.class);
                                                             startActivity(intent);
                                                         }else {
