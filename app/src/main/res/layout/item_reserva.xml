@@ -5,13 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="12dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        android:layout_marginBottom="12dp"
+        app:cardBackgroundColor="@color/green_claro"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -19,104 +21,93 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/green_claro"
             android:padding="16dp">
 
             <!-- Imagem -->
-            <ImageView
-                android:id="@+id/image_room_icon"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@color/green"
-                android:contentDescription="Imagem_Local"
-                android:scaleType="centerInside"
-                android:src="@drawable/auditorio_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Título -->
+
+            <ImageView
+                android:id="@+id/image_room_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/auditorio_icon"
+                android:contentDescription="Ícone do local"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
             <TextView
                 android:id="@+id/texto_titulo_reserva"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:text="Nome do Local"
+                android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image_room_icon"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toEndOf="@id/image_room_icon"
+                app:layout_constraintTop_toTopOf="@id/image_room_icon"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Descrição -->
             <TextView
                 android:id="@+id/texto_descricao_reserva"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="Descrição"
-                android:textColor="@android:color/black"
+                android:text="Descrição do local"
+                android:textColor="#444"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image_room_icon"
-                app:layout_constraintTop_toBottomOf="@+id/texto_titulo_reserva" />
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toEndOf="@id/image_room_icon"
+                app:layout_constraintTop_toBottomOf="@id/texto_titulo_reserva"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Local e Horário -->
+            <!-- Botões: Data, Horário -->
             <Button
                 android:id="@+id/selecionar_data"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/green"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
+                android:layout_height="40dp"
                 android:text="Data"
-                android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textColor="@android:color/white"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/btn_reservar"
-                app:layout_constraintEnd_toStartOf="@+id/selecionar_horario"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/image_room_icon"
-                app:layout_constraintTop_toBottomOf="@+id/texto_descricao_reserva"
-                app:layout_constraintVertical_bias="0.5"
-                tools:ignore="TextContrastCheck" />
+                android:textSize="12sp"
+                android:backgroundTint="@color/green"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintTop_toBottomOf="@id/texto_descricao_reserva"
+                app:layout_constraintStart_toEndOf="@id/image_room_icon" />
 
             <Button
                 android:id="@+id/selecionar_horario"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/green"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:text="Horario"
+                android:layout_height="40dp"
+                android:text="Horário"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/selecionar_data"
-                app:layout_constraintTop_toBottomOf="@+id/texto_descricao_reserva" />
+                android:textSize="12sp"
+                android:backgroundTint="@color/green"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintTop_toBottomOf="@id/texto_descricao_reserva"
+                app:layout_constraintStart_toEndOf="@id/selecionar_data" />
 
-            <!-- Botão -->
+            <!-- Botão Reservar -->
             <Button
                 android:id="@+id/btn_reservar"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/green"
                 android:text="Reservar"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image_room_icon"
-                app:layout_constraintTop_toBottomOf="@+id/selecionar_data" />
+                app:layout_constraintEnd_toStartOf="@+id/selecionar_horario"
+                app:layout_constraintStart_toEndOf="@+id/selecionar_data"
+                app:layout_constraintTop_toBottomOf="@id/selecionar_data" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

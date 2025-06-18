@@ -28,8 +28,8 @@
             <!-- Imagem à esquerda -->
             <ImageView
                 android:id="@+id/image_icon"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/green"
@@ -61,35 +61,33 @@
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@id/nome_solicitacao_gest_iten"
                 app:layout_constraintTop_toBottomOf="@id/nome_solicitacao_gest_iten" />
+            <ImageButton
+                android:id="@+id/btn_sim"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_btn_sim"
+                android:src="@drawable/ic_sim"
+                android:contentDescription="Sim"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/btn_nao"
+                app:tint="@color/black" />
 
             <ImageButton
                 android:id="@+id/btn_nao"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:background="@color/red"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_btn_nao"
                 android:contentDescription="Não"
                 android:src="@drawable/ic_nao"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_sim"
+                app:layout_constraintTop_toBottomOf="@id/btn_sim"
                 app:tint="@color/black" />
-
-            <ImageButton
-                android:id="@+id/btn_sim"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@color/green"
-                android:contentDescription="Sim"
-                android:src="@drawable/ic_sim"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/btn_nao"
-                app:tint="@color/black" />
-
             <TextView
                 android:id="@+id/descricao_solicitacao"
                 android:layout_width="wrap_content"
@@ -108,15 +106,15 @@
                 android:id="@+id/data_dolicitacao_gest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/cinza"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_chip"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
                 android:text="Data"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@+id/image_icon"
+                app:layout_constraintEnd_toStartOf="@id/hora_iten_solicitacao_gest"
+                app:layout_constraintStart_toStartOf="@+id/image_icon"
                 app:layout_constraintTop_toBottomOf="@+id/descricao_local_solicitacao_gest_iten" />
 
             <!-- Novo Texto abaixo das tags -->
@@ -126,13 +124,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/cinza"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_chip"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
                 android:text="09h - 19h"
                 android:textColor="@color/black"
                 android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_nao"
                 app:layout_constraintStart_toEndOf="@+id/data_dolicitacao_gest"
                 app:layout_constraintTop_toBottomOf="@+id/descricao_local_solicitacao_gest_iten" />
 

@@ -1,5 +1,7 @@
 package com.example.agendaifam.fragments;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.agendaifam.R;
+import com.example.agendaifam.adapter.EspacoAdapter;
 import com.example.agendaifam.models.mEspacos;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,15 +37,19 @@ public class adicionar_espacos extends Fragment {
     private Button confirmar;
     private Context ctx;
     private int codigoPerfil;
+    private String idEditando;
+    private boolean isEditing;
+
 
     public adicionar_espacos() {
     }
 
-    public adicionar_espacos newInstance(String param1, String param2) {
+    public static adicionar_espacos newInstance(mEspacos espaco) {
         adicionar_espacos fragment = new adicionar_espacos();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString("id", espaco.getId());
+        args.putString("nome", espaco.getNome());
+        args.putString("descricao", espaco.getDescricao());
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,6 +66,20 @@ public class adicionar_espacos extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+//        Bundle args = getArguments();
+//        iniciarComponentes();
+//        if (args != null) {
+//            String id = args.getString("id");
+//            String new_nome = args.getString("nome");
+//            String new_descricao = args.getString("descricao");
+//
+//            nome.setText(new_nome);
+//            descricao.setText(new_descricao);
+//
+//            isEditing = true;
+//            idEditando = id ;
+//        }
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_adicionar_espacos, container, false);
     }
@@ -67,24 +88,72 @@ public class adicionar_espacos extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         iniciarComponentes();
+
+        Bundle args = getArguments();
+        if (args != null) {
+            String id = args.getString("id");
+            String new_nome = args.getString("nome");
+            String new_descricao = args.getString("descricao");
+
+            nome.setText(new_nome);
+            descricao.setText(new_descricao);
+
+            isEditing = true;
+            idEditando = id;
+        }
+
         edt_cod_departamento.setHint(String.valueOf(codigoPerfil));
         edt_cod_departamento.setFocusable(false);
         edt_cod_departamento.setClickable(false);
 
-        confirmar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String nm = nome.getText().toString();
-                String desc = descricao.getText().toString();
-                String cod = edt_cod_departamento.getText().toString();
-                if (nm.isEmpty() || desc.isEmpty()) {
-                    Toast.makeText(requireContext(), "Preencha todos os campos", Toast.LENGTH_LONG).show();
-                } else {
-                    salvarDadosespaco(nome, descricao, codigoPerfil);
-                }
-            }
-        });
+        if (isEditing) {
+            confirmar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseFirestore banco = FirebaseFirestore.getInstance();
 
+
+                    CollectionReference collectionReference = banco.collection("espaco").document(String.valueOf(codigoPerfil)).collection("data");
+
+                    String nm = nome.getText().toString();
+                    String desc = descricao.getText().toString();
+
+                    mEspacos espaco = new mEspacos(nm, desc, null, idEditando, codigoPerfil);
+                    collectionReference.document(idEditando).set(espaco).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d("db", "Sucesso ao editar os dados");
+
+                            Toast.makeText(requireContext(), "Sucesso ao editar dados!", Toast.LENGTH_LONG).show();
+
+                            nome.setText("");
+                            descricao.setText("");
+                            edt_cod_departamento.setText("");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("db", "Erro ao editar os dados: " + e);
+                            Toast.makeText(requireContext(), "ERRO ao editar dados!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            });
+        } else {
+            confirmar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String nm = nome.getText().toString();
+                    String desc = descricao.getText().toString();
+                    String cod = edt_cod_departamento.getText().toString();
+                    if (nm.isEmpty() || desc.isEmpty()) {
+                        Toast.makeText(requireContext(), "Preencha todos os campos", Toast.LENGTH_LONG).show();
+                    } else {
+                        salvarDadosespaco(nome, descricao, codigoPerfil);
+                    }
+                }
+            });
+        }
 
     }
 

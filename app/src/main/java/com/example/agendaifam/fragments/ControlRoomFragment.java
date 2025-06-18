@@ -125,7 +125,7 @@ public class ControlRoomFragment extends Fragment {
                             mEspacos espaco = document.toObject(mEspacos.class);
                             espacoList.add(espaco);
                         }
-                        rv_espaco.setAdapter(new EspacoAdapter(espacoList));
+                        rv_espaco.setAdapter(new EspacoAdapter(espacoList, requireContext()));
                         rv_espaco.setLayoutManager(new LinearLayoutManager(getContext()));
 
                     } else {

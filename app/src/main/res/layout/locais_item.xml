@@ -3,128 +3,128 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="12dp">
 
-    <!-- CardView Principal -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_locais"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:elevation="24dp"
+        android:layout_margin="4dp"
+        android:elevation="6dp"
         app:cardBackgroundColor="@color/green_claro"
-        app:cardCornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Conteúdo do Card -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_card_local"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="12dp">
 
-            <!-- Imagem à esquerda -->
+            <!-- Imagem com borda arredondada -->
             <ImageView
                 android:id="@+id/image_icon"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="8dp"
-                android:background="@color/green"
-                android:scaleType="centerInside"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginEnd="12dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/auditorio_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:contentDescription="Ícone do local"
+                android:background="@drawable/bg_rounded_image"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <!-- Título -->
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:paddingStart="16dp"
                 android:text="Auditório"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/btn_edit"
                 app:layout_constraintStart_toEndOf="@id/image_icon"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/image_icon" />
 
             <!-- Descrição -->
             <TextView
                 android:id="@+id/tv_description"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:text="Descrição..."
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Espaço amplo com capacidade para 200 pessoas..."
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@id/tv_title"
+                android:layout_marginStart="16dp"
+                app:layout_constraintEnd_toStartOf="@id/btn_edit"
+                app:layout_constraintStart_toStartOf="@+id/tv_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
-            <!-- Tags CT e Horário -->
+            <!-- Tags: CT + horário -->
+            <LinearLayout
+                android:id="@+id/tag_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="@id/tv_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_description">
 
-            <!-- Botões Editar e Excluir -->
+                <TextView
+                    android:id="@+id/tag_ct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_chip"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:text="CT"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="8dp"/>
 
-            <ImageButton
-                android:id="@+id/btn_delete"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/red"
-                android:contentDescription="Excluir"
-                android:src="@drawable/ic_delete"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:tint="@color/black" />
+                <TextView
+                    android:id="@+id/tag_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_chip"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:text="09h - 19h"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"/>
+            </LinearLayout>
 
+            <!-- Botão Editar -->
             <ImageButton
                 android:id="@+id/btn_edit"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="20dp"
-                android:background="@color/green"
-                android:contentDescription="Editar"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_circle_green"
                 android:src="@drawable/ic_edit"
-                app:layout_constraintBottom_toTopOf="@+id/btn_delete"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="Editar"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="@android:color/white" />
 
-            <TextView
-                android:id="@+id/tag_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="4dp"
-                android:background="@color/cinza"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:text="09h - 19h"
-                android:textColor="@color/black"
-                android:textSize="14sp"
+            <!-- Botão Excluir -->
+            <ImageButton
+                android:id="@+id/btn_delete"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_circle_red"
+                android:src="@drawable/ic_delete"
+                android:contentDescription="Excluir"
+                app:layout_constraintTop_toBottomOf="@id/btn_edit"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tag_ct"
-                app:layout_constraintTop_toBottomOf="@+id/tv_description" />
-
-            <TextView
-                android:id="@+id/tag_ct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:layout_marginBottom="4dp"
-                android:background="@color/cinza"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:text="CT"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image_icon"
-                app:layout_constraintTop_toBottomOf="@+id/tv_description" />
-
+                app:tint="@android:color/white" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
