@@ -1,8 +1,6 @@
 package com.example.agendaifam.fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,15 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.agendaifam.DayViewContainer;
 import com.example.agendaifam.R;
+import com.example.agendaifam.models.mReserva;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.kizitonwose.calendarview.CalendarView;
+import com.kizitonwose.calendarview.model.CalendarDay;
+import com.kizitonwose.calendarview.ui.DayBinder;
 
+import java.time.DayOfWeek;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -45,6 +54,7 @@ public class MenuFragment extends Fragment {
     private TextView tv_cargo;
     private TextView tv_nome;
     private String usuarioID;
+    CalendarView calendarView;
     private final FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
 
     public MenuFragment() {
@@ -145,6 +155,29 @@ public class MenuFragment extends Fragment {
                             tv_nome.setText(nome);
                             if (areaGestao != null) {
                                 tv_cargo.setText("Gestor: " + areaGestao);
+
+                                banco_recuperar.collection("reservas")
+                                        .whereEqualTo("codigoSetor", codigo)
+                                        .get()
+                                        .addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
+
+                                                List<mReserva> reservasList = new ArrayList<>();
+
+                                                for (QueryDocumentSnapshot doc : task.getResult()) {
+                                                    mReserva reserva = doc.toObject(mReserva.class);
+                                                    reservasList.add(reserva);
+                                                }
+
+                                                loadCalendarEvents(reservasList, view);
+
+                                            } else {
+                                                Log.e("Firestore", "Erro ao buscar reservas", task.getException());
+                                            }
+                                        });
+
+
+
                             }
                             else {
                                 tv_cargo.setText("Professor");
@@ -155,10 +188,77 @@ public class MenuFragment extends Fragment {
             }
         });
     }
+
+    private void loadCalendarEvents(List<mReserva> reservasList, View view) {
+
+        calendarView.setup(
+                YearMonth.now().minusMonths(1),
+                YearMonth.now().plusMonths(1),
+                DayOfWeek.MONDAY
+        );
+        calendarView.scrollToMonth(YearMonth.now());
+
+        calendarView.setDayBinder(new DayBinder<DayViewContainer>() {
+
+            @NonNull
+            @Override
+            public DayViewContainer create(@NonNull View view) {
+                return new DayViewContainer(view);
+            }
+
+            @Override
+            public void bind(@NonNull DayViewContainer container, @NonNull CalendarDay day) {
+                TextView dayText = container.dayText;
+                dayText.setText(String.valueOf(day.getDate().getDayOfMonth()));
+
+                // Verificar se há reserva neste dia
+                boolean hasReservation = false;
+
+                for (mReserva r : reservasList) {
+                    if (r.getDataReserva().equals(day.getDate().toString())) {
+                        hasReservation = true;
+                        break;
+                    }
+                }
+
+                if (hasReservation) {
+                    dayText.setBackgroundResource(R.drawable.bg_day_reserved);
+                } else {
+                    dayText.setBackgroundResource(R.drawable.bg_day_default);
+                }
+
+                // Click → mostrar horários
+                container.getView().setOnClickListener(v -> {
+                    List<mReserva> reservasDoDia = new ArrayList<>();
+                    for (mReserva r : reservasList) {
+                        if (r.getDataReserva().equals(day.getDate().toString())) {
+                            reservasDoDia.add(r);
+                        }
+                    }
+
+                    if (!reservasDoDia.isEmpty()) {
+                        StringBuilder msg = new StringBuilder("Reservas:\n");
+                        for (mReserva r : reservasDoDia) {
+                            msg.append(r.getHoraInicioReserva())
+                                    .append(" - ")
+                                    .append(r.getHoraFimReserva())
+                                    .append("\n");
+                        }
+                        Toast.makeText(v.getContext(), msg.toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+    }
+
+
     private void iniciarComponentes(){
         tv_nome = requireView().findViewById(R.id.user_name);
         tv_email = requireView().findViewById(R.id.user_email);
         tv_cargo = requireView().findViewById(R.id.user_role);
+
+        calendarView = requireView().findViewById(R.id.calendarView);
+
 
     }
 }

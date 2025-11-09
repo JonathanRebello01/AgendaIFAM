@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white"
     android:padding="16dp"
@@ -84,7 +85,25 @@
                 android:text="email@ifam.edu.br"
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
+            
         </LinearLayout>
+
+        <com.kizitonwose.calendarview.CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cv_dayViewResource="@layout/item_calendar_day"
+            />
+
+        <TextView
+            android:id="@+id/dayText"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:textColor="@color/black" />
+
 
     </LinearLayout>
 
