@@ -22,6 +22,7 @@ import com.example.agendaifam.models.mEspacos;
 import com.example.agendaifam.models.mReserva;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -68,7 +69,7 @@ public class ReservaAdapter extends RecyclerView.Adapter {
         reservaViewHolder.nome_reservar.setText(nome);
         reservaViewHolder.descricao_reservar.setText(descricao);
 
-        mReserva reservaAtual = new mReserva(null, null, null, espaco.getId(), usuarioID, null, null, null, null, espaco.getNome(), espaco.getDescricao(), 0, espaco.getCod_departamento());
+        mReserva reservaAtual = new mReserva(null, null, null, espaco.getId(), usuarioID, null, null, null, null, espaco.getNome(), espaco.getDescricao(), null, 0, espaco.getCod_departamento());
 
         reservaViewHolder.selecionar_data.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +92,7 @@ public class ReservaAdapter extends RecyclerView.Adapter {
                             Timestamp firebaseTimestamp = new Timestamp(selectedDate);
 
                             reservaAtual.setDataReserva(firebaseTimestamp);
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM", Locale.getDefault());
                             String formattedDate = dateFormat.format(selectedDate);
 
                             Toast.makeText(context, "Data selecionada: " + formattedDate, Toast.LENGTH_SHORT).show();
@@ -103,7 +104,7 @@ public class ReservaAdapter extends RecyclerView.Adapter {
             }
         });
 
-        reservaViewHolder.selecionar_horario.setOnClickListener(new View.OnClickListener() {
+        reservaViewHolder.selecionar_hora_inicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
@@ -118,7 +119,7 @@ public class ReservaAdapter extends RecyclerView.Adapter {
 
                             Toast.makeText(context, "Horário selecionado: " + formattedTime, Toast.LENGTH_SHORT).show();
 
-                            reservaViewHolder.selecionar_horario.setText(formattedTime);
+                            reservaViewHolder.selecionar_hora_inicio.setText(formattedTime);
 
                             Calendar selectedCalendar = Calendar.getInstance();
                             selectedCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
@@ -134,11 +135,43 @@ public class ReservaAdapter extends RecyclerView.Adapter {
             }
         });
 
+        reservaViewHolder.getSelecionar_hora_fim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+
+                Calendar calendar = Calendar.getInstance();
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(context,
+                        (view, selectedHour, selectedMinute) -> {
+                            String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute);
+
+                            Toast.makeText(context, "Horário selecionado: " + formattedTime, Toast.LENGTH_SHORT).show();
+
+                            reservaViewHolder.getSelecionar_hora_fim.setText(formattedTime);
+
+                            Calendar selectedCalendar = Calendar.getInstance();
+                            selectedCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                            selectedCalendar.set(Calendar.MINUTE, selectedMinute);
+
+
+                            Timestamp firebaseTimestampHora = new Timestamp(selectedCalendar.getTime());
+
+                            reservaAtual.setHoraFimReserva(firebaseTimestampHora);
+                        },
+                        hour, minute, true);
+                timePickerDialog.show();
+            }
+        });
+
         reservaViewHolder.btn_reservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (reservaAtual.getDataReserva() != null && reservaAtual.getHoraInicioReserva() != null){
-                    realisarReserva(reservaAtual, v);
+                if (reservaAtual.getDataReserva() != null && reservaAtual.getHoraInicioReserva() != null && reservaAtual.getHoraFimReserva() != null){
+                    reservaAtual.setObsReserva(reservaViewHolder.obsReserva.getText().toString());
+                    realisarReserva(reservaAtual, v, reservaViewHolder);
                 } else {
                     Toast.makeText(ctx, "Selecione a data e a hora da reserva", Toast.LENGTH_LONG).show();
                 }
@@ -146,7 +179,7 @@ public class ReservaAdapter extends RecyclerView.Adapter {
         });
     }
 
-    private void realisarReserva(mReserva reservaAtual, View v){
+    private void realisarReserva(mReserva reservaAtual, View v, ReservaViewHolder reservaViewHolder) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = db.collection("reservas");
         String documentId = collectionReference.document().getId();
@@ -159,6 +192,11 @@ public class ReservaAdapter extends RecyclerView.Adapter {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(v.getContext(), "Reserva realizada com sucesso!", Toast.LENGTH_SHORT).show();
+                reservaViewHolder.obsReserva.setText("");
+                reservaViewHolder.obsReserva.clearFocus();
+                reservaViewHolder.selecionar_data.setText("Data");
+                reservaViewHolder.selecionar_hora_inicio.setText("Hora Início");
+                reservaViewHolder.getSelecionar_hora_fim.setText("Hora Fim");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -169,23 +207,30 @@ public class ReservaAdapter extends RecyclerView.Adapter {
     }
 
 
-
     @Override
     public int getItemCount() {
         return espacoList.size();
     }
 
     public static class ReservaViewHolder extends RecyclerView.ViewHolder {
-        TextView descricao_reservar, selecionar_data, selecionar_horario, nome_reservar;
-        Button btn_reservar;
+        TextView descricao_reservar, selecionar_data, nome_reservar, obsReserva;
+        Button btn_reservar, selecionar_hora_inicio, getSelecionar_hora_fim;
+
+        TextInputEditText input_obs_reserva;
 
         public ReservaViewHolder(@NonNull View itemView) {
             super(itemView);
             nome_reservar = itemView.findViewById(R.id.texto_titulo_reserva);
             descricao_reservar = itemView.findViewById(R.id.texto_descricao_reserva);
-            selecionar_horario = itemView.findViewById(R.id.selecionar_horario);
+            selecionar_hora_inicio = itemView.findViewById(R.id.selecionar_hora_inicio);
+
             btn_reservar = itemView.findViewById(R.id.btn_reservar);
+            selecionar_hora_inicio = itemView.findViewById(R.id.selecionar_hora_inicio);
+            getSelecionar_hora_fim = itemView.findViewById(R.id.selecionar_hora_fim);
+            obsReserva = itemView.findViewById(R.id.input_observacoes_reserva);
+
             selecionar_data = itemView.findViewById(R.id.selecionar_data);
+
 
         }
 

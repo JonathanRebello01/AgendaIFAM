@@ -47,7 +47,8 @@ public class SolicitacaoProfAdapter extends RecyclerView.Adapter{
         String nome = reservaProfList.get(position).getNomeEspaco();
         String descricao = reservaProfList.get(position).getDescricaoEspaco();
         Timestamp data = reservaProfList.get(position).getDataReserva();
-        Timestamp hora = reservaProfList.get(position).getHoraInicioReserva();
+        Timestamp horaInicioReserva = reservaProfList.get(position).getHoraInicioReserva();
+        Timestamp horaFimReserva = reservaProfList.get(position).getHoraInicioReserva();
         int status = reservaProfList.get(position).getStatusReserva();
 
 
@@ -60,10 +61,19 @@ public class SolicitacaoProfAdapter extends RecyclerView.Adapter{
         String formattedDate = dateFormat.format(dataDate);
         solicitacaoProfViewHolder.data.setText(formattedDate);
 
-        Date horaDate = hora.toDate();
+
+        Date dataInicio = horaInicioReserva.toDate();
+        Date dataFim = horaFimReserva.toDate();
+
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        String formattedTime = timeFormat.format(horaDate);
-        solicitacaoProfViewHolder.hora.setText(formattedTime);
+
+        String horaInicioFormatada = timeFormat.format(dataInicio);
+        String horaFimFormatada = timeFormat.format(dataFim);
+
+        String resultado = horaInicioFormatada + " - " + horaFimFormatada;
+        SolicitacaoProfViewHolder.hora.setText(resultado);
+
+
 
         if (status == 0) {
             solicitacaoProfViewHolder.status.setText("Pendente");
@@ -84,7 +94,11 @@ public class SolicitacaoProfAdapter extends RecyclerView.Adapter{
     }
 
     public static class SolicitacaoProfViewHolder extends RecyclerView.ViewHolder {
-        TextView nome, descricao, data, hora, status;
+        TextView nome;
+        TextView descricao;
+        TextView data;
+        static TextView hora;
+        TextView status;
 
 
         public SolicitacaoProfViewHolder(@NonNull View itemView) {

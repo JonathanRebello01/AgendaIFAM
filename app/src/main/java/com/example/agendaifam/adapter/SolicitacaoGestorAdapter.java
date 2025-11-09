@@ -49,9 +49,11 @@ public class SolicitacaoGestorAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         String nome = reservaGestList.get(position).getNomeEspaco();
-        String descricao = reservaGestList.get(position).getDescricaoEspaco();
+        String observacao = reservaGestList.get(position).getObsReserva();
         Timestamp data = reservaGestList.get(position).getDataReserva();
-        Timestamp hora = reservaGestList.get(position).getHoraInicioReserva();
+        Timestamp horaInicioReserva = reservaGestList.get(position).getHoraInicioReserva();
+        Timestamp horaFimReserva = reservaGestList.get(position).getHoraInicioReserva();
+
         String nome_solicitante = reservaGestList.get(position).getNomeProfessorReserva();
         String nomeEesp = reservaGestList.get(position).getNomeEspaco();
 
@@ -86,17 +88,24 @@ public class SolicitacaoGestorAdapter extends RecyclerView.Adapter{
 
         SolicitacaoGestorAdapter.SolicitacaoGestorViewHolder solicitacaoGestorViewHolder = (SolicitacaoGestorAdapter.SolicitacaoGestorViewHolder) holder;
         solicitacaoGestorViewHolder.nome.setText(nome);
-        solicitacaoGestorViewHolder.descricao.setText(descricao);
+        solicitacaoGestorViewHolder.observacao.setText(observacao);
 
         Date dataDate = data.toDate();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String formattedDate = dateFormat.format(dataDate);
         solicitacaoGestorViewHolder.data.setText(formattedDate);
 
-        Date horaDate = hora.toDate();
+        Date dataInicio = horaInicioReserva.toDate();
+        Date dataFim = horaFimReserva.toDate();
+
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        String formattedTime = timeFormat.format(horaDate);
-        solicitacaoGestorViewHolder.hora.setText(formattedTime);
+
+        String horaInicioFormatada = timeFormat.format(dataInicio);
+        String horaFimFormatada = timeFormat.format(dataFim);
+
+        String resultado = horaInicioFormatada + " - " + horaFimFormatada;
+        solicitacaoGestorViewHolder.hora.setText(resultado);
+
 
         solicitacaoGestorViewHolder.nome_solicitante.setText(nome_solicitante);
         solicitacaoGestorViewHolder.nomeEesp.setText(nomeEesp);
@@ -152,7 +161,7 @@ public class SolicitacaoGestorAdapter extends RecyclerView.Adapter{
     }
 
     public static class SolicitacaoGestorViewHolder extends RecyclerView.ViewHolder {
-        TextView nome, descricao, data, hora, nome_solicitante, nomeEesp, descricao_solicitacao;
+        TextView nome, observacao, data, hora, nome_solicitante, nomeEesp, descricao_solicitacao;
         ImageButton confirmar, rejeitar;
 
 
@@ -161,7 +170,7 @@ public class SolicitacaoGestorAdapter extends RecyclerView.Adapter{
             super(itemView);
 
             nome = itemView.findViewById(R.id.nome_solicitacao_gest_iten);
-            descricao = itemView.findViewById(R.id.descricao_local_solicitacao_gest_iten);
+            observacao = itemView.findViewById(R.id.input_observacoes_reserva_gest_iten);
             data = itemView.findViewById(R.id.data_dolicitacao_gest);
             hora = itemView.findViewById(R.id.hora_iten_solicitacao_gest);
             nome_solicitante = itemView.findViewById(R.id.nome);

@@ -15,9 +15,9 @@ public class mReserva {
     private  String nomeGestorReserva;
     private String nomeEspaco;
     private String descricaoEspaco;
+    private String obsReserva;
     private int statusReserva;
     private int codigoSetor;
-
 
     @Override
     public String toString() {
@@ -33,6 +33,7 @@ public class mReserva {
                 ", nomeGestorReserva='" + nomeGestorReserva + '\'' +
                 ", nomeEspaco='" + nomeEspaco + '\'' +
                 ", descricaoEspaco='" + descricaoEspaco + '\'' +
+                ", obsReserva='" + obsReserva + '\'' +
                 ", statusReserva=" + statusReserva +
                 ", codigoSetor=" + codigoSetor +
                 '}';
@@ -41,7 +42,22 @@ public class mReserva {
     public mReserva(){
 
     }
-    public mReserva(Timestamp horaInicioReserva, Timestamp horaFimReserva, Timestamp dataReserva, String idEspacosReserva, String idProfessorReserva, String idGestorReserva, String idReserva, String nomeProfessorReserva, String nomeGestorReserva, String nomeEspaco, String descricaoEspaco, int statusReserva, int codigoSetor) {
+    public mReserva(
+            Timestamp horaInicioReserva,
+            Timestamp horaFimReserva,
+            Timestamp dataReserva,
+            String idEspacosReserva,
+            String idProfessorReserva,
+            String idGestorReserva,
+            String idReserva,
+            String nomeProfessorReserva,
+            String nomeGestorReserva,
+            String nomeEspaco,
+            String descricaoEspaco,
+            String obsReserva,
+            int statusReserva,
+            int codigoSetor
+    ) {
         this.horaInicioReserva = horaInicioReserva;
         this.horaFimReserva = horaFimReserva;
         this.dataReserva = dataReserva;
@@ -159,5 +175,13 @@ public class mReserva {
 
     public void setCodigoSetor(int codigoSetor) {
         this.codigoSetor = codigoSetor;
+    }
+
+    public String getObsReserva() {
+        return obsReserva;
+    }
+
+    public void setObsReserva(String obsReserva) {
+        this.obsReserva = obsReserva;
     }
 }

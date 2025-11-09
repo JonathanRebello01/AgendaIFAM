@@ -24,9 +24,6 @@
             android:padding="16dp">
 
             <!-- Imagem -->
-
-            <!-- Título -->
-
             <ImageView
                 android:id="@+id/image_room_icon"
                 android:layout_width="80dp"
@@ -38,6 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
+            <!-- Título -->
             <TextView
                 android:id="@+id/texto_titulo_reserva"
                 android:layout_width="0dp"
@@ -65,48 +63,103 @@
                 app:layout_constraintTop_toBottomOf="@id/texto_titulo_reserva"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Botões: Data, Horário -->
+            <!-- NOVO: Label Observações abaixo da descrição -->
+            <TextView
+                android:id="@+id/label_observacoes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Observações: "
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="@id/input_layout_obaservacoes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_room_icon" />
+
+            <!-- Novo: Input de Detalhes (top agora abaixo do label_observacoes) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_obaservacoes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/label_observacoes"
+                style="@style/CustomTextInputStyle"
+                android:textColorHint="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_observacoes_reserva"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:inputType="textMultiLine"
+                    android:gravity="top|start"
+                    android:maxLines="5"
+                    android:textColor="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Botões: Data, Hora Início, Hora Fim - usando chain para distribuição igual -->
             <Button
                 android:id="@+id/selecionar_data"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
                 android:text="Data"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:textSize="12sp"
+                android:layout_marginTop="12dp"
                 android:backgroundTint="@color/green"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintTop_toBottomOf="@id/texto_descricao_reserva"
-                app:layout_constraintStart_toEndOf="@id/image_room_icon" />
+                app:layout_constraintTop_toBottomOf="@id/input_layout_obaservacoes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/selecionar_hora_inicio"
+                app:layout_constraintHorizontal_chainStyle="spread" />
 
             <Button
-                android:id="@+id/selecionar_horario"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="Horário"
+                android:id="@+id/selecionar_hora_inicio"
+                android:layout_width="125dp"
+                android:layout_height="44dp"
+                android:text="Hora Início"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:textSize="12sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:backgroundTint="@color/green"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintTop_toBottomOf="@id/texto_descricao_reserva"
-                app:layout_constraintStart_toEndOf="@id/selecionar_data" />
+                app:layout_constraintTop_toBottomOf="@id/input_layout_obaservacoes"
+                app:layout_constraintStart_toEndOf="@id/selecionar_data"
+                app:layout_constraintEnd_toStartOf="@id/selecionar_hora_fim" />
 
-            <!-- Botão Reservar -->
+            <Button
+                android:id="@+id/selecionar_hora_fim"
+                android:layout_width="125dp"
+                android:layout_height="44dp"
+                android:text="Hora Fim"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/green"
+                app:layout_constraintTop_toBottomOf="@id/input_layout_obaservacoes"
+                app:layout_constraintStart_toEndOf="@id/selecionar_hora_inicio"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Botão Reservar: centralizado abaixo dos botões -->
             <Button
                 android:id="@+id/btn_reservar"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="12dp"
                 android:backgroundTint="@color/green"
                 android:text="Reservar"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/selecionar_horario"
-                app:layout_constraintStart_toEndOf="@+id/selecionar_data"
-                app:layout_constraintTop_toBottomOf="@id/selecionar_data" />
+                app:layout_constraintTop_toBottomOf="@id/selecionar_data"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
