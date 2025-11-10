@@ -51,33 +51,35 @@ public class CalendarFragment extends Fragment {
                         // Tenta pegar como Timestamp (caso salvo dessa forma)
                         Object dataObj = doc.get("dataReserva");
                         Calendar c = Calendar.getInstance();
-                        if (dataObj instanceof com.google.firebase.Timestamp) {
-                            Date date = ((com.google.firebase.Timestamp) dataObj).toDate();
-                            c.setTime(date);
-                        } else if (dataObj instanceof Date) {
-                            // Caso venha direto como Date
-                            c.setTime((Date) dataObj);
-                        } else if (dataObj instanceof String) {
-                            // Caso venha como "yyyy-MM-dd"
-                            try {
-                                String dataStr = (String) dataObj;
-                                String[] p = dataStr.split("-");
-                                int y = Integer.parseInt(p[0]);
-                                int m = Integer.parseInt(p[1]) - 1;
-                                int d = Integer.parseInt(p[2]);
-                                c.set(y, m, d);
-                            } catch (Exception e) {
-                                Log.e("CalendarFragment", "Erro ao converter dataReserva String", e);
+                        if(doc.get("statusReserva") != null && String.valueOf(doc.get("statusReserva")).equals("1")){
+                            if (dataObj instanceof com.google.firebase.Timestamp) {
+                                Date date = ((com.google.firebase.Timestamp) dataObj).toDate();
+                                c.setTime(date);
+                            } else if (dataObj instanceof Date) {
+                                // Caso venha direto como Date
+                                c.setTime((Date) dataObj);
+                            } else if (dataObj instanceof String) {
+                                // Caso venha como "yyyy-MM-dd"
+                                try {
+                                    String dataStr = (String) dataObj;
+                                    String[] p = dataStr.split("-");
+                                    int y = Integer.parseInt(p[0]);
+                                    int m = Integer.parseInt(p[1]) - 1;
+                                    int d = Integer.parseInt(p[2]);
+                                    c.set(y, m, d);
+                                } catch (Exception e) {
+                                    Log.e("CalendarFragment", "Erro ao converter dataReserva String", e);
+                                    continue;
+                                }
+                            } else {
+                                // Formato inesperado → ignora
+                                Log.w("CalendarFragment", "Formato desconhecido de dataReserva: " + dataObj);
                                 continue;
                             }
-                        } else {
-                            // Formato inesperado → ignora
-                            Log.w("CalendarFragment", "Formato desconhecido de dataReserva: " + dataObj);
-                            continue;
-                        }
-
                         // Adiciona evento com ícone
                         diasComEventos.add(new EventDay(c, R.drawable.ic_event_marker));
+                        }
+
                     }
 
                     // Aplica eventos no calendário
@@ -144,22 +146,24 @@ public class CalendarFragment extends Fragment {
         db.collection("reservas")
                 .whereGreaterThanOrEqualTo("dataReserva", startDate)
                 .whereLessThanOrEqualTo("dataReserva", endDate)
+                .orderBy("dataReserva")
                 .orderBy("horaInicioReserva")
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
 
-                    List<mReserva> reservas = new ArrayList<>(); // Agora a lista existe aqui
+                    List<mReserva> reservas = new ArrayList<>();
 
                     for (QueryDocumentSnapshot doc : querySnapshot) {
+                        if(doc.get("statusReserva") != null && String.valueOf(doc.get("statusReserva")).equals("1")){
+                            Timestamp hi = doc.getTimestamp("horaInicioReserva");
+                            Timestamp hf = doc.getTimestamp("horaFimReserva");
+                            Timestamp data = doc.getTimestamp("dataReserva");
 
-                        Timestamp hi = doc.getTimestamp("horaInicioReserva");
-                        Timestamp hf = doc.getTimestamp("horaFimReserva");
-                        Timestamp data = doc.getTimestamp("dataReserva");
+                            String professor = safeGetString(doc, "nomeProfessorReserva");
+                            String espaco = safeGetString(doc, "nomeEspaco");
 
-                        String professor = safeGetString(doc, "nomeProfessorReserva");
-                        String espaco = safeGetString(doc, "nomeEspaco");
-
-                        reservas.add(new mReserva(espaco, professor, hi, hf, data));
+                            reservas.add(new mReserva(espaco, professor, hi, hf, data));
+                        }
                     }
 
                     // Atualiza o RecyclerView
