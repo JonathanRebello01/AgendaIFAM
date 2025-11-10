@@ -77,15 +77,20 @@
                 app:layout_constraintStart_toStartOf="@id/tv_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_description">
 
+
+
+
                 <TextView
                     android:id="@+id/tag_ct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_chip"
+                    android:backgroundTint="@color/green"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="4dp"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
                     android:text="CT"
-                    android:textColor="@color/black"
                     android:textSize="12sp"
                     android:layout_marginEnd="8dp"/>
 
@@ -94,10 +99,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_chip"
+                    android:backgroundTint="@color/green"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="4dp"
                     android:text="09h - 19h"
-                    android:textColor="@color/black"
                     android:textSize="12sp"/>
             </LinearLayout>
 
