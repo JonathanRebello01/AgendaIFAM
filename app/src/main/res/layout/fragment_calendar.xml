@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_calendar"
     android:orientation="vertical"
     android:padding="16dp"
@@ -8,36 +9,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-
-
         <com.applandeo.materialcalendarview.CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="300dp"
+            android:layout_marginBottom="8dp"
+            app:headerColor="#004D40"
+            app:headerLabelColor="@android:color/white"
+            app:selectionColor="#12B147"
+            app:todayLabelColor="#004D40"
+        />
 
 
-
-
-
-
-
-    <!-- Lista de eventos do dia -->
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reservasRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingTop="16dp">
-
-        <LinearLayout
-            android:id="@+id/eventsContainer"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </LinearLayout>
-
-    </ScrollView>
-
+        android:clipToPadding="false"
+        android:padding="8dp"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_reservas_calendar"
+    />
 </LinearLayout>

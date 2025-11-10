@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +17,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.example.agendaifam.R;
+import com.example.agendaifam.adapter.ReservasCalendarAdapter;
+import com.example.agendaifam.models.mReserva;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -33,19 +39,9 @@ import java.util.Locale;
  */
 public class CalendarFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private final List<EventDay> diasComEventos = new ArrayList<>();
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private CalendarView calendarView;
-    private LinearLayout eventsContainer;
-
+    ReservasCalendarAdapter adapter = new ReservasCalendarAdapter(new ArrayList<>());
     private FirebaseFirestore db;
 
     public CalendarFragment() {
@@ -55,24 +51,17 @@ public class CalendarFragment extends Fragment {
         db.collection("reservas")
                 .get()
                 .addOnSuccessListener(query -> {
-
                     diasComEventos.clear();
-
                     for (QueryDocumentSnapshot doc : query) {
-
                         // Tenta pegar como Timestamp (caso salvo dessa forma)
                         Object dataObj = doc.get("dataReserva");
-
                         Calendar c = Calendar.getInstance();
-
                         if (dataObj instanceof com.google.firebase.Timestamp) {
                             Date date = ((com.google.firebase.Timestamp) dataObj).toDate();
                             c.setTime(date);
-
                         } else if (dataObj instanceof Date) {
                             // Caso venha direto como Date
                             c.setTime((Date) dataObj);
-
                         } else if (dataObj instanceof String) {
                             // Caso venha como "yyyy-MM-dd"
                             try {
@@ -101,49 +90,44 @@ public class CalendarFragment extends Fragment {
                 });
     }
 
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CalendarFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static CalendarFragment newInstance(String param1, String param2) {
         CalendarFragment fragment = new CalendarFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
 
 
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         calendarView = view.findViewById(R.id.calendarView);
-        eventsContainer = view.findViewById(R.id.eventsContainer);
         db = FirebaseFirestore.getInstance();
-        ((com.applandeo.materialcalendarview.CalendarView) calendarView)
+
+        RecyclerView reservasRecyclerView = view.findViewById(R.id.reservasRecyclerView);
+        reservasRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        reservasRecyclerView.setAdapter(adapter);
+
+        carregarDiasComEventos();
+
+        (calendarView)
                 .setOnDayClickListener(eventDay -> {
 
                     Calendar clicked = eventDay.getCalendar();
+
+                    try {
+                        calendarView.setDate(clicked);
+                    } catch (OutOfDateRangeException e) {
+                        throw new RuntimeException(e);
+                    }
+
 
                     int year = clicked.get(Calendar.YEAR);
                     int month = clicked.get(Calendar.MONTH);
@@ -151,94 +135,44 @@ public class CalendarFragment extends Fragment {
 
                     String dateStr = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month+1, day);
 
-                    eventsContainer.removeAllViews();
-                    adicionarTexto("Carregando reservas...");
-
                     loadReservationsForDate(year, month, day, dateStr);
                 });
 
-//        // Atualiza título do mês ao iniciar
-//        updateMonthTitle(calendarView.getDate());
-//
-//        // Scroll para hoje (opcional)
-//        calendarView.setDate(System.currentTimeMillis(), false, true);
 
-//        calendarView.setOnDateChangeListener((calendarView, year, month, dayOfMonth) -> {
-//
-//            // month no CalendarView começa em 0 → por isso usamos month diretamente
-//            Calendar c = Calendar.getInstance();
-//            c.set(year, month, dayOfMonth, 0, 0, 0);
-//
-//            // converte para yyyy-MM-dd
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-//            String dateStr = sdf.format(c.getTime());
-//
-//            // Limpa lista antes de carregar novos itens
-//            eventsContainer.removeAllViews();
-//            adicionarTexto("Carregando reservas...");
-//
-//            // 🔥 Chama Firestore
-//            loadReservationsForDate(year, month, dayOfMonth, dateStr);
-//
-//        });
 
-            // Atualiza título do mês se o usuário navegar (API nativa não tem callback pra mês trocado,
-        // então registramos um listener simples no onScrollChange — em alguns dispositivos pode não disparar.
-        // Aqui deixamos o título atualizado quando a data muda (suficiente para seleções).
-        carregarDiasComEventos();
 
         return view;
     }
 
-    private void adicionarTexto(String texto) {
-        TextView tv = new TextView(requireContext());
-        tv.setText(texto);
-        tv.setTextSize(16f);
-        tv.setPadding(8, 8, 8, 8);
-        eventsContainer.addView(tv);
-    }
-
-    private void updateMonthTitle(long millis) {
-        Date d = new Date(millis);
-        SimpleDateFormat fmt = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
-    }
 
     private void loadReservationsForDate(int year, int monthZeroBased, int dayOfMonth, String selectedDateStr) {
-        final List<String> results = new ArrayList<>();
-
         db.collection("reservas")
                 .whereEqualTo("dataReserva", selectedDateStr)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     if (!querySnapshot.isEmpty()) {
+                        List<mReserva> reservas = new ArrayList<>();
                         for (QueryDocumentSnapshot doc : querySnapshot) {
-                            String hi = safeGetString(doc, "horaInicioReserva");
-                            String hf = safeGetString(doc, "horaFimReserva");
-                            String who = safeGetString(doc, "solicitante"); // opcional
-                            results.add(formatReservaLine(hi, hf, who));
-                        }
-                        // Atualiza a lista no Scroll
-                        eventsContainer.removeAllViews();
 
-                        if (results.isEmpty()) {
-                            adicionarTexto("Nenhuma reserva para este dia.");
-                        } else {
-                            for (String r : results) {
-                                adicionarTexto("• " + r);
-                            }
+                            Timestamp hi = doc.getTimestamp("horaInicioReserva");
+                            Timestamp hf = doc.getTimestamp("horaFimReserva");
+                            Timestamp dataReserva = doc.getTimestamp("dataReserva");
+
+                            String professor = safeGetString(doc, "nomeProfessorReserva");
+                            String nomeEspaco = safeGetString(doc, "nomeEspaco");
+                            reservas.add(new mReserva(nomeEspaco, professor, hi, hf, dataReserva));
                         }
-                    } else {
-                        // Se não encontrou por string, tenta buscar por Timestamp/Dates no intervalo do dia.
-                        queryReservationsByTimestampRange(year, monthZeroBased, dayOfMonth);
+
+                            adapter.updateData(reservas);
+
                     }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("CalendarFragment", "Erro ao buscar reservas (by string)", e);
-                    // fallback: também tentar por timestamp
-                    queryReservationsByTimestampRange(year, monthZeroBased, dayOfMonth);
+
                 });
     }
-    private void queryReservationsByTimestampRange(int year, int monthZeroBased, int dayOfMonth) {
+
+
+
+        private void queryReservationsByTimestampRange(int year, int monthZeroBased, int dayOfMonth) {
         Calendar start = Calendar.getInstance();
         start.set(year, monthZeroBased, dayOfMonth, 0, 0, 0);
         start.set(Calendar.MILLISECOND, 0);

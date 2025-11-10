@@ -42,6 +42,15 @@ public class mReserva {
     public mReserva(){
 
     }
+
+    public mReserva(String nomeEspaco,String nomeProfessorReserva, Timestamp horaInicioReserva, Timestamp horaFimReserva, Timestamp dataReserva ){
+        this.horaInicioReserva = horaInicioReserva;
+        this.horaFimReserva = horaFimReserva;
+        this.dataReserva = dataReserva;
+        this.nomeProfessorReserva = nomeProfessorReserva;
+        this.nomeEspaco = nomeEspaco;
+    }
+
     public mReserva(
             Timestamp horaInicioReserva,
             Timestamp horaFimReserva,
