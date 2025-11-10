@@ -17,7 +17,7 @@
         android:src="@drawable/ifam_logo"
         android:contentDescription="Logo IFAM"
         android:layout_gravity="center"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="16dp" />
 
     <!-- Informações do usuário -->
     <LinearLayout
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_marginTop="112dp">
+        android:layout_marginTop="16dp">
 
         <!-- Nome do usuário com imagem -->
         <LinearLayout
@@ -88,23 +88,12 @@
             
         </LinearLayout>
 
-        <com.kizitonwose.calendarview.CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            app:cv_dayViewResource="@layout/item_calendar_day"
-            />
-
-        <TextView
-            android:id="@+id/dayText"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:gravity="center"
-            android:textColor="@color/black" />
-
-
     </LinearLayout>
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_calendar"
+        >
+    </androidx.fragment.app.FragmentContainerView>
 
 </LinearLayout>

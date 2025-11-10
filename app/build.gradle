@@ -66,6 +66,10 @@ dependencies {
     implementation(libs.view)
     implementation(libs.calendarview)
 
+
+    implementation libs.material.calendar.view
+
+
     // ✅ Desugaring — coloque aqui em cima
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
 

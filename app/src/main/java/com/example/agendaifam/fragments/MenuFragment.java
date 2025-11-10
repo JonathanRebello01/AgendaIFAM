@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.agendaifam.DayViewContainer;
 import com.example.agendaifam.R;
 import com.example.agendaifam.models.mReserva;
 import com.google.firebase.auth.FirebaseAuth;
@@ -101,6 +100,12 @@ public class MenuFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         iniciarComponentes();
 
+        // Carrega o fragment do calendário dentro do MenuFragment
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_calendar, new CalendarFragment())
+                .commit();
+
         usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         DocumentReference getdata = banco_recuperar.collection("Usuarios").document(usuarioID);
@@ -169,7 +174,7 @@ public class MenuFragment extends Fragment {
                                                     reservasList.add(reserva);
                                                 }
 
-                                                loadCalendarEvents(reservasList, view);
+//                                                loadCalendarEvents(reservasList, view);
 
                                             } else {
                                                 Log.e("Firestore", "Erro ao buscar reservas", task.getException());
@@ -189,67 +194,7 @@ public class MenuFragment extends Fragment {
         });
     }
 
-    private void loadCalendarEvents(List<mReserva> reservasList, View view) {
 
-        calendarView.setup(
-                YearMonth.now().minusMonths(1),
-                YearMonth.now().plusMonths(1),
-                DayOfWeek.MONDAY
-        );
-        calendarView.scrollToMonth(YearMonth.now());
-
-        calendarView.setDayBinder(new DayBinder<DayViewContainer>() {
-
-            @NonNull
-            @Override
-            public DayViewContainer create(@NonNull View view) {
-                return new DayViewContainer(view);
-            }
-
-            @Override
-            public void bind(@NonNull DayViewContainer container, @NonNull CalendarDay day) {
-                TextView dayText = container.dayText;
-                dayText.setText(String.valueOf(day.getDate().getDayOfMonth()));
-
-                // Verificar se há reserva neste dia
-                boolean hasReservation = false;
-
-                for (mReserva r : reservasList) {
-                    if (r.getDataReserva().equals(day.getDate().toString())) {
-                        hasReservation = true;
-                        break;
-                    }
-                }
-
-                if (hasReservation) {
-                    dayText.setBackgroundResource(R.drawable.bg_day_reserved);
-                } else {
-                    dayText.setBackgroundResource(R.drawable.bg_day_default);
-                }
-
-                // Click → mostrar horários
-                container.getView().setOnClickListener(v -> {
-                    List<mReserva> reservasDoDia = new ArrayList<>();
-                    for (mReserva r : reservasList) {
-                        if (r.getDataReserva().equals(day.getDate().toString())) {
-                            reservasDoDia.add(r);
-                        }
-                    }
-
-                    if (!reservasDoDia.isEmpty()) {
-                        StringBuilder msg = new StringBuilder("Reservas:\n");
-                        for (mReserva r : reservasDoDia) {
-                            msg.append(r.getHoraInicioReserva())
-                                    .append(" - ")
-                                    .append(r.getHoraFimReserva())
-                                    .append("\n");
-                        }
-                        Toast.makeText(v.getContext(), msg.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
-    }
 
 
     private void iniciarComponentes(){
