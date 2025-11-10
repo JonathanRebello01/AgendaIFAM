@@ -32,11 +32,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CalendarFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CalendarFragment extends Fragment {
 
     private final List<EventDay> diasComEventos = new ArrayList<>();
@@ -104,9 +99,6 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         calendarView = view.findViewById(R.id.calendarView);
         db = FirebaseFirestore.getInstance();
@@ -117,65 +109,31 @@ public class CalendarFragment extends Fragment {
 
         carregarDiasComEventos();
 
-        (calendarView)
-                .setOnDayClickListener(eventDay -> {
+        calendarView.setOnDayClickListener(eventDay -> {
+            Calendar clicked = eventDay.getCalendar();
 
-                    Calendar clicked = eventDay.getCalendar();
+            try {
+                calendarView.setDate(clicked.getTime());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-                    try {
-                        calendarView.setDate(clicked);
-                    } catch (OutOfDateRangeException e) {
-                        throw new RuntimeException(e);
-                    }
+            int year = clicked.get(Calendar.YEAR);
+            int month = clicked.get(Calendar.MONTH);
+            int day = clicked.get(Calendar.DAY_OF_MONTH);
 
-
-                    int year = clicked.get(Calendar.YEAR);
-                    int month = clicked.get(Calendar.MONTH);
-                    int day = clicked.get(Calendar.DAY_OF_MONTH);
-
-                    String dateStr = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month+1, day);
-
-                    loadReservationsForDate(year, month, day, dateStr);
-                });
-
-
-
+            queryReservationsByTimestampRange(year, month, day);
+        });
 
         return view;
     }
 
+    private void queryReservationsByTimestampRange(int year, int monthZeroBased, int dayOfMonth) {
 
-    private void loadReservationsForDate(int year, int monthZeroBased, int dayOfMonth, String selectedDateStr) {
-        db.collection("reservas")
-                .whereEqualTo("dataReserva", selectedDateStr)
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    if (!querySnapshot.isEmpty()) {
-                        List<mReserva> reservas = new ArrayList<>();
-                        for (QueryDocumentSnapshot doc : querySnapshot) {
-
-                            Timestamp hi = doc.getTimestamp("horaInicioReserva");
-                            Timestamp hf = doc.getTimestamp("horaFimReserva");
-                            Timestamp dataReserva = doc.getTimestamp("dataReserva");
-
-                            String professor = safeGetString(doc, "nomeProfessorReserva");
-                            String nomeEspaco = safeGetString(doc, "nomeEspaco");
-                            reservas.add(new mReserva(nomeEspaco, professor, hi, hf, dataReserva));
-                        }
-
-                            adapter.updateData(reservas);
-
-                    }
-
-                });
-    }
-
-
-
-        private void queryReservationsByTimestampRange(int year, int monthZeroBased, int dayOfMonth) {
         Calendar start = Calendar.getInstance();
         start.set(year, monthZeroBased, dayOfMonth, 0, 0, 0);
         start.set(Calendar.MILLISECOND, 0);
+
         Calendar end = Calendar.getInstance();
         end.set(year, monthZeroBased, dayOfMonth, 23, 59, 59);
         end.set(Calendar.MILLISECOND, 999);
@@ -186,31 +144,29 @@ public class CalendarFragment extends Fragment {
         db.collection("reservas")
                 .whereGreaterThanOrEqualTo("dataReserva", startDate)
                 .whereLessThanOrEqualTo("dataReserva", endDate)
+                .orderBy("horaInicioReserva")
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
-                    List<String> results = new ArrayList<>();
+
+                    List<mReserva> reservas = new ArrayList<>(); // Agora a lista existe aqui
+
                     for (QueryDocumentSnapshot doc : querySnapshot) {
-                        // dataReserva pode ser Timestamp ou Date; não precisamos do valor aqui
-                        String hi = safeGetString(doc, "horaInicioReserva");
-                        String hf = safeGetString(doc, "horaFimReserva");
-                        String who = safeGetString(doc, "solicitante");
-                        results.add(formatReservaLine(hi, hf, who));
 
+                        Timestamp hi = doc.getTimestamp("horaInicioReserva");
+                        Timestamp hf = doc.getTimestamp("horaFimReserva");
+                        Timestamp data = doc.getTimestamp("dataReserva");
+
+                        String professor = safeGetString(doc, "nomeProfessorReserva");
+                        String espaco = safeGetString(doc, "nomeEspaco");
+
+                        reservas.add(new mReserva(espaco, professor, hi, hf, data));
                     }
-                    String dateLabel = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                            .format(startDate);
-                    showReservasDialog(dateLabel, results);
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("CalendarFragment", "Erro ao buscar reservas (by timestamp)", e);
-                    // mostra mensagem vazia
-                    showReservasDialog(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(startDate), new ArrayList<>());
-                });
-    }
-    private String formatReservaLine(String horaInicio, String horaFim, String solicitante) {
-        if (horaInicio == null || horaFim == null) return "Reserva sem horário";
 
-        return horaInicio + " - " + horaFim + (solicitante != null ? " (" + solicitante + ")" : "");
+                    // Atualiza o RecyclerView
+                    adapter.updateData(reservas);
+
+                })
+                .addOnFailureListener(e -> Log.e("CalendarFragment", "Erro ao buscar reservas", e));
     }
 
     private String safeGetString(QueryDocumentSnapshot doc, String field) {
@@ -219,25 +175,4 @@ public class CalendarFragment extends Fragment {
         return o.toString();
     }
 
-    private void showReservasDialog(String dateLabel, List<String> linhas) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Reservas - " + dateLabel);
-
-        if (linhas == null || linhas.isEmpty()) {
-            builder.setMessage("Nenhuma reserva neste dia.");
-            builder.setPositiveButton("OK", null);
-            builder.show();
-            return;
-        }
-
-        // Monta mensagem com cada linha em nova linha
-        StringBuilder msg = new StringBuilder();
-        for (String l : linhas) {
-            msg.append("• ").append(l).append("\n");
-        }
-
-        builder.setMessage(msg.toString());
-        builder.setPositiveButton("OK", null);
-        builder.show();
-    }
 }

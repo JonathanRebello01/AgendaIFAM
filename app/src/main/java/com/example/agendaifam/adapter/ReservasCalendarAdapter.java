@@ -34,11 +34,11 @@ public class ReservasCalendarAdapter extends RecyclerView.Adapter<ReservasCalend
     @Override
     public void onBindViewHolder(@NonNull ReservaViewHolder holder, int position) {
         mReserva r = reservas.get(position);
-        holder.local.setText("LOCAL: " + r.getNomeEspaco());
+        holder.local.setText(r.getNomeEspaco());
         holder.nomeSolicitante.setText("Solicitante: " + r.getNomeProfessorReserva());
-        holder.dataReserva.setText("Solicitante: " + formatDateBr(r.getDataReserva()));
-        holder.horaInicioReserva.setText("Solicitante: " + formatTimeBr(r.getHoraInicioReserva()));
-        holder.horaFimReserva.setText("Solicitante: " + formatTimeBr(r.getHoraFimReserva()));
+        holder.dataReserva.setText("Data: " + formatDateBr(r.getDataReserva()));
+        holder.horaInicioReserva.setText("Início: " + formatTimeBr(r.getHoraInicioReserva()));
+        holder.horaFimReserva.setText("Fim: " + formatTimeBr(r.getHoraFimReserva()));
     }
 
     @Override
