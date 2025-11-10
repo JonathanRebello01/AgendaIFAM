@@ -1,19 +1,19 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.googleGms)
+    alias(libs.plugins.kotlinAndroid)   // <-- atualizado para kotlinAndroid
 }
 
 android {
     namespace 'com.example.agendaifam'
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.example.agendaifam"
         minSdk 24
-        targetSdk 34
+        targetSdk 36
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -23,26 +23,54 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
     }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
     buildFeatures {
         viewBinding true
     }
 }
 
 dependencies {
+    // Firebase
     implementation platform("com.google.firebase:firebase-bom:32.2.0")
     implementation libs.firebase.firestore
+    implementation libs.firebase.auth
+
+    // Android UI
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
-    implementation libs.firebase.auth
+
+    // Navigation
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
+
+    // Testes
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
+//    implementation libs.calendarview
+    implementation(libs.core)
+    implementation(libs.data)
+    implementation(libs.view)
+    implementation(libs.calendarview)
+
+
+    implementation libs.material.calendar.view
+
+
+    // ✅ Desugaring — coloque aqui em cima
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
+
 }
